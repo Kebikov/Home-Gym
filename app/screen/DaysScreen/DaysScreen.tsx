@@ -1,15 +1,22 @@
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import React, { FC } from 'react';
 import { DATA_DAYS } from '@/data/dataDays';
-import { LinearGradient } from 'expo-linear-gradient';
-import MaskedView from '@react-native-masked-view/masked-view';
 import Gradient from '@/component/Gradient/Gradient';
 //* component
 import Day from '@/component/Day/Day';
 
+/**
+ * @screen
+ * Экран с карточками, дни с наборами упражнений.
+ * @example <DaysScreen/>
+ * @returns {JSX.Element}
+ */
 const DaysScreen: FC = () => {
 
-    const days = DATA_DAYS.map((day, i) => <Day currentDay={day} key={i}/>);
+    /**
+     * Массив элементов карточек с днями тренировак.
+     */
+    const days: JSX.Element[] = DATA_DAYS.map((day, i) => <Day currentDay={day} key={i}/>);
 
 	return (
 		<View style={style.main} >

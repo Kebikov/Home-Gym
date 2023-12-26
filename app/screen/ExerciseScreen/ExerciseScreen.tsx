@@ -11,38 +11,37 @@ import WeightExercise from '@/component/WeightExercise/WeightExercise';
  * Экран с днем занятия и упражнениями.
  * @returns {JSX.Element}
  */
-const ExerciseScreen: FC<TScreenPropExerciseScreen> = ({route}) => {
-
-    //const id = route.params.id;
-    const id = 'Day-1';
+const ExerciseScreen: FC<TScreenPropExerciseScreen> = ({ route }) => {
+	//const id = route.params.id;
+	const id = 'Day-1';
 
 	return (
-		<View style={styles.main} >
-            <ImageBackground source={require('@/source/img/1.jpg')} style={styles.header}>
-                <DateExercise/>
-                <WeightExercise/>
-            </ImageBackground>
+		<View style={styles.main}>
+			<ImageBackground source={require('@/source/img/1.jpg')} style={styles.header}>
+				<DateExercise />
+				<WeightExercise />
+			</ImageBackground>
 		</View>
 	);
 };
 
 const styles = StyleSheet.create({
-    main: {
-        flex: 1
-    },
-    header: {
-        width: '100%',
-        height: 350,
-        backgroundColor: 'red',
-        borderBottomLeftRadius: 40,
-        borderBottomRightRadius: 40,
-        overflow: 'hidden',
-        justifyContent: 'space-between'
-    },
-    text: {
-        color: '#fff',
-        fontSize: 30
-    }
-})
+	main: {
+		flex: 1
+	},
+	header: {
+		width: '100%',
+		height: 350,
+		backgroundColor: 'red',
+		borderBottomLeftRadius: 40,
+		borderBottomRightRadius: 40,
+		overflow: 'hidden',
+		justifyContent: 'space-between'
+	},
+	text: {
+		color: '#fff',
+		fontSize: 30
+	}
+});
 
 export default ExerciseScreen;

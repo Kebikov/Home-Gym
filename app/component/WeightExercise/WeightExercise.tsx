@@ -1,22 +1,30 @@
-import { View, Text, StyleSheet, ImageBackground } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
+import { BlurView } from 'expo-blur';
 import React, { FC } from 'react';
 import { colorRootApp } from '@/data/colors';
-import MaskedView from '@react-native-masked-view/masked-view';
 
 /**
  * @component
  * Блок с весами снаряда и обшим весом.
- * @example
- * <WeightExercise/>
+ * @example <WeightExercise/>
  * @returns {JSX.Element}
  */
 const WeightExercise: FC = () => {
 	return (
-        <ImageBackground style={styles.main} source={require('@/source/img/fon.png')}>
-            <View style={styles.left} ></View>
-            <View style={styles.center} ></View>
-            <View style={styles.right} ></View>
-        </ImageBackground>
+        <View style={styles.main} >
+            <BlurView style={[styles.left, styles.publicBox]} intensity={20} >
+                <Text style={styles.textKg} >20+10+5+4+1</Text>
+            </BlurView>
+
+            <BlurView style={[styles.center, styles.publicBox]} intensity={20} tint='dark'>
+                <Text style={styles.textWeight}>87.5</Text>
+                <Text style={styles.textKg} >KG</Text>
+            </BlurView>
+
+            <BlurView style={[styles.right, styles.publicBox]} intensity={10} >
+                <Text style={styles.textKg} >the same</Text>
+            </BlurView>
+        </View>
 	);
 };
 
@@ -26,22 +34,40 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         width: '100%',
         height: 80,
-        //backgroundColor: 'red'
+        gap: 12,
+        paddingBottom: 10,
+        paddingLeft: 10,
+        paddingRight: 10
+    },
+    publicBox: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        overflow: 'hidden',
+        backgroundColor: colorRootApp.black_30,
     },
     left: {
-        //backgroundColor: colorRootApp.orange,
-        width: 150,
-        borderBottomEndRadius: -20,
-        borderBottomWidth: 20,
+        width: 140,
+        borderBottomLeftRadius: 30,
+        borderTopLeftRadius: 30,
     },
     right: {
-        //backgroundColor: colorRootApp.orange,
-        width: 150,
+        width: 140,
+        borderBottomRightRadius: 30,
+        borderTopRightRadius: 30,
     },
     center: {
-        //backgroundColor: colorRootApp.orange,
-        width: 100,
-        height: 100
+        flex: 1,
+        borderRadius: 5,
+    },
+    textWeight: {
+        fontFamily: 'Sport',
+        fontSize: 30,
+        color: '#fff'
+    },
+    textKg: {
+        fontFamily: 'Sport',
+        fontSize: 17,
+        color: '#fff'
     }
 });
 

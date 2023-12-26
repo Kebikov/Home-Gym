@@ -1,50 +1,34 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
 import { FC, useState, useEffect, useCallback } from 'react';
+import { useFonts } from 'expo-font';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-
+import { colorRootApp } from '@/data/colors';
 import * as SplashScreen from 'expo-splash-screen';
-import * as Font from 'expo-font';
-import Entypo from '@expo/vector-icons/Entypo';
 //* component
 import Navigation from '@/navigation/Navigation';
 
 SplashScreen.preventAutoHideAsync();
 
 const App: FC = () => {
-	const [appIsReady, setAppIsReady] = useState(false);
+	const [fontsLoaded] = useFonts({
+		'Sport': require('@/source/fonts/BebasNeue.ttf')
+	});
 
-	useEffect(() => {
-		async function prepare() {
-			try {
-				await Font.loadAsync(Entypo.font);
-				await new Promise(resolve => setTimeout(resolve, 100));
-			} catch (e) {
-				console.warn(e);
-			} finally {
-				setAppIsReady(true);
-			}
-		}
-
-		prepare();
-	}, []);
-
-    const onLayoutRootView = useCallback(async () => {
-		if (appIsReady) {
+	const onLayoutRootView = useCallback(async () => {
+		if (fontsLoaded) {
 			await SplashScreen.hideAsync();
 		}
-	}, [appIsReady]);
+	}, [fontsLoaded]);
 
-	if (!appIsReady) {
+	if (!fontsLoaded) {
 		return null;
 	}
-    
 
 	return (
-		<SafeAreaProvider >
-			<SafeAreaView style={{ flex: 1 }} onLayout={onLayoutRootView} >
+		<SafeAreaProvider>
+			<SafeAreaView style={{ flex: 1 }} onLayout={onLayoutRootView}>
 				<Navigation />
-				<StatusBar style='light' backgroundColor='black' />
+				<StatusBar style='light' backgroundColor={colorRootApp.background} />
 			</SafeAreaView>
 		</SafeAreaProvider>
 	);

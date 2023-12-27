@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Image } from 'react-native';
 import { BlurView } from 'expo-blur';
 import React, { FC } from 'react';
 import { colorRootApp } from '@/data/colors';
@@ -12,18 +12,20 @@ import { colorRootApp } from '@/data/colors';
 const WeightExercise: FC = () => {
 	return (
         <View style={styles.main} >
-            <BlurView style={[styles.left, styles.publicBox]} intensity={20} >
+            
+            <BlurView style={[styles.left, styles.publicBox]} intensity={30} tint='dark' >
                 <Text style={styles.textKg} >20+10+5+4+1</Text>
             </BlurView>
 
-            <BlurView style={[styles.center, styles.publicBox]} intensity={20} tint='dark'>
+            <BlurView style={[styles.center, styles.publicBox]} intensity={30} tint='dark' >
                 <Text style={styles.textWeight}>87.5</Text>
                 <Text style={styles.textKg} >KG</Text>
             </BlurView>
 
-            <BlurView style={[styles.right, styles.publicBox]} intensity={10} >
+            <BlurView style={[styles.right, styles.publicBox]} intensity={30} tint='dark' >
                 <Text style={styles.textKg} >the same</Text>
             </BlurView>
+            
         </View>
 	);
 };
@@ -42,8 +44,15 @@ const styles = StyleSheet.create({
     publicBox: {
         justifyContent: 'center',
         alignItems: 'center',
-        overflow: 'hidden',
-        backgroundColor: colorRootApp.black_30,
+        overflow: 'hidden'
+    },
+    absolute: {
+        position: 'absolute',
+        zIndex: 3,
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0
     },
     left: {
         width: 140,
@@ -57,7 +66,7 @@ const styles = StyleSheet.create({
     },
     center: {
         flex: 1,
-        borderRadius: 5,
+        borderRadius: 5
     },
     textWeight: {
         fontFamily: 'Sport',
@@ -67,7 +76,7 @@ const styles = StyleSheet.create({
     textKg: {
         fontFamily: 'Sport',
         fontSize: 17,
-        color: '#fff'
+        color: '#fff',
     }
 });
 

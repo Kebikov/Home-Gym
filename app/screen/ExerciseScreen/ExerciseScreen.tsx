@@ -5,6 +5,8 @@ import { colorRootApp } from '@/data/colors';
 //* component
 import DateExercise from '@/component/DateExercise/DateExercise';
 import WeightExercise from '@/component/WeightExercise/WeightExercise';
+import UpDownWeight from '@/component/UpDownWeight/UpDownWeight';
+import TimeView from '@/component/TimeView/TimeView';
 
 /**
  * @screen
@@ -17,10 +19,13 @@ const ExerciseScreen: FC<TScreenPropExerciseScreen> = ({ route }) => {
 
 	return (
 		<View style={styles.main}>
-			<ImageBackground source={require('@/source/img/1.jpg')} style={styles.header}>
+			<ImageBackground source={require('@/source/img/1.jpg')} style={styles.header} >
 				<DateExercise />
 				<WeightExercise />
+                <UpDownWeight/>
 			</ImageBackground>
+            <View style={{flex: 1}}></View>
+            <TimeView givenTime={10}/>
 		</View>
 	);
 };

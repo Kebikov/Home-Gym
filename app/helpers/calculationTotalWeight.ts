@@ -14,16 +14,22 @@ const calculationTotalWeight = (str: string): number => {
 		switch (item) {
 			case '4':
 				weight = 4.1;
+                break;
 			case '3':
 				weight = 3.6;
+                break;
 			case '2':
 				weight = 3.1;
+                break;
 			case '1':
 				weight = 1.6;
+                break;
 			case '0':
 				weight = 0.5;
+                break;
 			default:
 				weight = Number(item);
+                break;
 		}
 		return resalt + weight;
 	}, 0);

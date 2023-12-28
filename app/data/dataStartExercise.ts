@@ -1,13 +1,10 @@
-import { TId } from "./dataDays";
+import { TDay } from "./dataDays";
 
 /**
  * Вес малого и большого грифа.
  */
 type TWeightNeck = '1.6' | '7.3' | '0';
-/**
- * Номер упражнения.
- */
-export type TExercise = '0' | '1' | '2';
+
 
 /**
  * Обьект одного упражнения.

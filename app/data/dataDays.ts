@@ -1,10 +1,14 @@
-export type TId = '0' | '1' | '2' | '3' | '4';
+export type TDay = '0' | '1' | '2' | '3' | '4';
 
+/**
+ * @interface
+ * Обьект одного дня занятий на стартовой странице.
+ */
 export interface IDataDays {
     /**
-     * Уникальный id набора упражнений.
+     * День занятий, в формате "0" | "1"  | ...
      */
-    id: TId;
+    day: TDay;
     /**
      * Изображение фоновое.
      */
@@ -32,7 +36,7 @@ export interface IDataDays {
  */
 export const DATA_DAYS: Array<IDataDays> = [
     {
-        id: '0',
+        day: '0',
         img: require(`@/source/img/1.jpg`),
         date: '23.12.2023',
         title: 'Day One',
@@ -40,7 +44,7 @@ export const DATA_DAYS: Array<IDataDays> = [
         lastExercise: false
     },
     {
-        id: '1',
+        day: '1',
         img: require(`@/source/img/2.jpg`),
         date: '23.12.2023',
         title: 'Day Two',
@@ -48,7 +52,7 @@ export const DATA_DAYS: Array<IDataDays> = [
         lastExercise: true
     },
     {
-        id: '2',
+        day: '2',
         img: require(`@/source/img/3.jpg`),
         date: '23.12.2023',
         title: 'Day Three',
@@ -56,7 +60,7 @@ export const DATA_DAYS: Array<IDataDays> = [
         lastExercise: false
     },
     {
-        id: '3',
+        day: '3',
         img: require(`@/source/img/4.jpg`),
         date: '23.12.2023',
         title: 'Day Four',
@@ -64,7 +68,7 @@ export const DATA_DAYS: Array<IDataDays> = [
         lastExercise: false
     },
     {
-        id: '4',
+        day: '4',
         img: require(`@/source/img/5.jpg`),
         date: '23.12.2023',
         title: 'Day Five',

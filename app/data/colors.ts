@@ -1,5 +1,8 @@
+interface ICOLOR_ROOT_APP {
+    [key : string]: string;
+}
 
-export const colorRootApp = {
+export const COLOR_ROOT_APP: ICOLOR_ROOT_APP = {
     BACKGROUND: '#131313',
     LIME: '#D9F511',
     LIME_70: 'rgba(217, 245, 17, 0.7)',

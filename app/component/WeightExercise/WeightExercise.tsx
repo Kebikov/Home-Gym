@@ -1,8 +1,7 @@
 import { View, Text, StyleSheet } from 'react-native';
 import { BlurView } from 'expo-blur';
 import React, { FC } from 'react';
-import { TId } from '@/data/dataDays';
-import { TExercise } from '@/data/dataStartExercise';
+import { TDay } from '@/data/dataDays';
 //* helpers
 import calculationTotalWeight from '@/helpers/calculationTotalWeight';
 //* data
@@ -10,19 +9,19 @@ import { DATA_START_EXERCISE } from '@/data/dataStartExercise';
 
 interface IWeightExercise {
     /**
-     * Уникальный id набора упражнений.
+     * День занятий, в формате "0" | "1"  | ...
      */
-    day: TId;
+    day: TDay;
     /**
      * Номер упражнения.
      */
-    exercise: TExercise;
+    exercise: number;
 }
 
 /**
  * @component
  * Блок с весами снаряда и обшим весом.
- * @param day - Уникальный id набора упражнений.
+ * @param day - День занятий, в формате "0" | "1"  | ...
  * @param exercise - Номер упражнения.
  * @example <WeightExercise/>
  * @returns {JSX.Element}

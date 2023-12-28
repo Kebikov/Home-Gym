@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
-import { colorRootApp } from '@/data/colors';
+import { COLOR_ROOT_APP } from '@/data/colors';
 import { TypeRootPage } from './navigation.types';
 //* component
 import DaysScreen from '@/screen/DaysScreen/DaysScreen';
@@ -17,7 +17,7 @@ const Navigation: FC = () => {
                 screenOptions={{
                     headerShown: false,
                     contentStyle: {
-                        backgroundColor: `${colorRootApp.BACKGROUND}`
+                        backgroundColor: `${COLOR_ROOT_APP.BACKGROUND}`
                     }
                 }}
             >   

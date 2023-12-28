@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet } from 'react-native';
 import React, { FC } from 'react';
-import { colorRootApp } from '@/data/colors';
+import { COLOR_ROOT_APP } from '@/data/colors';
 
 /**
  * @component
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
         marginTop: 10
     },
     dayBox: {
-        backgroundColor: colorRootApp.LIME_70,
+        backgroundColor: COLOR_ROOT_APP.LIME_70,
         paddingVertical: 2,
         paddingHorizontal: 5,
         borderRadius: 4,

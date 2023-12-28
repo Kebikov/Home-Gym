@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet } from 'react-native';
 import React, { FC } from 'react';
-import { colorRootApp } from '@/data/colors';
+import { COLOR_ROOT_APP } from '@/data/colors';
 
 interface ISet {
     /**
@@ -46,9 +46,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: '100%',
         height: 60,
-        backgroundColor: colorRootApp.DARK_GREY,
+        backgroundColor: COLOR_ROOT_APP.DARK_GREY,
         borderRadius: 10,
-        marginTop: 20
+        marginTop: 15
     },
     rapBox: {
         justifyContent: 'center',
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
         width: 40,
         height: 40,
         borderRadius: 5,
-        backgroundColor: colorRootApp.GREY,
+        backgroundColor: COLOR_ROOT_APP.GREY,
         marginLeft: 10
     },
     descriptionsBox: {
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     textRap: {
         fontFamily: 'Sport',
         fontSize: 30,
-        color: colorRootApp.LIGHT_GREY
+        color: COLOR_ROOT_APP.LIGHT_GREY
     },
     textTitle: {
         fontSize: 16,
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     textDescriptions: {
         fontSize: 14,
         fontWeight: '500',
-        color: colorRootApp.MEDIUM_GREY,
+        color: COLOR_ROOT_APP.MEDIUM_GREY,
         lineHeight: 16
     }
 });

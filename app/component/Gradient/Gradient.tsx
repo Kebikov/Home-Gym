@@ -2,7 +2,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import React, { FC } from 'react';
 import MaskedView from '@react-native-masked-view/masked-view';
 import { LinearGradient } from 'expo-linear-gradient';
-import { colorRootApp } from '@/data/colors';
+import { COLOR_ROOT_APP } from '@/data/colors';
 
 
 interface IGradient {
@@ -31,7 +31,7 @@ const Gradient: FC<IGradient>= ({text, size}) => {
             }
         >
             <LinearGradient
-                colors={['cadetblue', colorRootApp.LIME]}
+                colors={['cadetblue', COLOR_ROOT_APP.LIME]}
                 style={{ width: '100%', height: size }}
             />
         {/* <Image source={require('@/source/img/3.jpg')} style={{width: '100%', height: 50}}/> */}

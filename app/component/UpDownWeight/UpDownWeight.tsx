@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, Image } from 'react-native';
 import React, { FC } from 'react';
-import { colorRootApp } from '@/data/colors';
+import { COLOR_ROOT_APP } from '@/data/colors';
 import { icon } from '@/source/icon/icon';
 
 /**
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
         right: 10,
         width: 40,
         height: 150,
-        backgroundColor: colorRootApp.WHITE_40,
+        backgroundColor: COLOR_ROOT_APP.WHITE_40,
         borderRadius: 30
     },
     icon: {

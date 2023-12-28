@@ -3,7 +3,7 @@ import React, { FC } from 'react';
 import { Svg, Circle, G } from 'react-native-svg';
 import { useState, useEffect } from 'react';
 import transferSecInTime from '@/helpers/transferSecInTime';
-import { colorRootApp } from '@/data/colors';
+import { COLOR_ROOT_APP } from '@/data/colors';
 import { Audio, AVPlaybackSource } from 'expo-av';
 import {soundAudio} from '@/data/soundAudio';
 import { Vibration } from 'react-native';
@@ -125,9 +125,9 @@ const TimeView: FC<ITimerView> = ({ givenTime }) => {
 
 			<Svg width={size} height={size}>
 				<G rotation={'-90'} origin={center}>
-					<Circle stroke={colorRootApp.LIGHT_GREY} cx={center} cy={center} r={radius} fill={'transparent'} strokeWidth={strokeWidth} />
+					<Circle stroke={COLOR_ROOT_APP.LIGHT_GREY} cx={center} cy={center} r={radius} fill={'transparent'} strokeWidth={strokeWidth} />
 					<Circle
-						stroke={colorRootApp.YELLOW}
+						stroke={COLOR_ROOT_APP.YELLOW}
 						cx={center}
 						cy={center}
 						r={radius}
@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
 
 		borderRadius: 10,
 
-		backgroundColor: colorRootApp.GREY
+		backgroundColor: COLOR_ROOT_APP.GREY
 	},
 	text: {
 		fontFamily: 'Sport',

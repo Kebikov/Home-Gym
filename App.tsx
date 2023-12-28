@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { FC, useState, useEffect, useCallback } from 'react';
 import { useFonts } from 'expo-font';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-import { colorRootApp } from '@/data/colors';
+import { COLOR_ROOT_APP } from '@/data/colors';
 import * as SplashScreen from 'expo-splash-screen';
 //* component
 import Navigation from '@/navigation/Navigation';
@@ -28,7 +28,7 @@ const App: FC = () => {
 		<SafeAreaProvider>
 			<SafeAreaView style={{ flex: 1 }} onLayout={onLayoutRootView}>
 				<Navigation />
-				<StatusBar style='light' backgroundColor={colorRootApp.BACKGROUND} />
+				<StatusBar style='light' backgroundColor={COLOR_ROOT_APP.BACKGROUND} />
 			</SafeAreaView>
 		</SafeAreaProvider>
 	);

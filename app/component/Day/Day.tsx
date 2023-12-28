@@ -6,7 +6,7 @@ import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { TScreenPropExerciseScreen, TypeRootPage } from '@/navigation/navigation.types';
 
 interface IDay {
-    currentDay: IDataDays
+    day: IDataDays
 }
 
 /**
@@ -14,7 +14,7 @@ interface IDay {
  * Карточка дня занятий. 
  * @returns {JSX.Element} 
  */
-const Day: FC<IDay> = ({currentDay}) => {
+const Day: FC<IDay> = ({day}) => {
 
     const {navigate} = useNavigation<NavigationProp<TypeRootPage>>();
 
@@ -22,19 +22,19 @@ const Day: FC<IDay> = ({currentDay}) => {
 		<Pressable
             onPress={ 
                 () => {
-                    navigate('ExerciseScreen', {id: currentDay.id});
+                    navigate('ExerciseScreen', {id: day.id, exercise: '0'});
                 }
             }
             style={style.main} 
         >
             <ImageBackground
-                source={currentDay.img}
+                source={day.img}
                 style={style.imageBackground}
             >
                 <View style={style.overlay} />
                 <Image 
                     source={
-                                currentDay.lastExercise 
+                                day.lastExercise 
                                     ? 
                                     require('@/source/img/dumbbell-orange.png')
                                     :
@@ -43,14 +43,14 @@ const Day: FC<IDay> = ({currentDay}) => {
                     style={style.dumbbell} 
                 />
                 <View style={style.textDateBox}>
-                    <Text style={style.textDate} >{currentDay.date}</Text>
+                    <Text style={style.textDate} >{day.date}</Text>
                 </View>
 
                 <View> 
                     <View style={style.titleBox} >
-                        <Text style={style.title} >{currentDay.title}</Text>
+                        <Text style={style.title} >{day.title}</Text>
                     </View>
-                    <Text style={style.textPart} >{currentDay.description}</Text>
+                    <Text style={style.textPart} >{day.description}</Text>
                 </View>
             </ImageBackground>
 		</Pressable>

@@ -1,29 +1,79 @@
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { BlurView } from 'expo-blur';
 import React, { FC } from 'react';
-import { colorRootApp } from '@/data/colors';
+import { TId } from '@/data/dataDays';
+import { TExercise } from '@/data/dataStartExercise';
+//* helpers
+import calculationTotalWeight from '@/helpers/calculationTotalWeight';
+//* data
+import { DATA_START_EXERCISE } from '@/data/dataStartExercise';
+
+interface IWeightExercise {
+    /**
+     * Уникальный id набора упражнений.
+     */
+    day: TId;
+    /**
+     * Номер упражнения.
+     */
+    exercise: TExercise;
+}
 
 /**
  * @component
  * Блок с весами снаряда и обшим весом.
+ * @param day - Уникальный id набора упражнений.
+ * @param exercise - Номер упражнения.
  * @example <WeightExercise/>
  * @returns {JSX.Element}
  */
-const WeightExercise: FC = () => {
+const WeightExercise: FC<IWeightExercise> = ({day, exercise}) => {
+
+    /**
+     * Вес первой стороны блинов грифа.
+     */
+    let weightOne: number;
+    /**
+     * Вес второй стороны блинов грифа.
+     */
+    let weightTwo: number | 'THE SAME';
+    /**
+     * Обший вес снаряда, гриф + блины.
+     */
+    let weightTotal: number;
+
+    // если вес грифа равен "0"
+    if(DATA_START_EXERCISE[day][exercise].weightNeck === '0') {
+        weightOne = calculationTotalWeight(DATA_START_EXERCISE[day][exercise].weightOne);
+        weightTwo = 'THE SAME';
+        weightTotal = weightOne;
+    } else {
+        weightOne = calculationTotalWeight(DATA_START_EXERCISE[day][exercise].weightOne);
+
+        if(DATA_START_EXERCISE[day][exercise].weightTwo === 'THE SAME') {
+            weightTwo = weightOne;
+        } else {
+            weightTwo = calculationTotalWeight(DATA_START_EXERCISE[day][exercise].weightTwo);
+        }
+    
+        weightTotal = weightOne + weightTwo + Number(DATA_START_EXERCISE[day][exercise].weightNeck);
+    }
+
+    
 	return (
         <View style={styles.main} >
             
             <BlurView style={[styles.left, styles.publicBox]} intensity={30} tint='dark' >
-                <Text style={styles.textKg} >20+10+5+4+1</Text>
+                <Text style={styles.textKg} >{DATA_START_EXERCISE[day][exercise].weightOne}</Text>
             </BlurView>
 
             <BlurView style={[styles.center, styles.publicBox]} intensity={30} tint='dark' >
-                <Text style={styles.textWeight}>87.5</Text>
+                <Text style={styles.textWeight}>{weightTotal}</Text>
                 <Text style={styles.textKg} >KG</Text>
             </BlurView>
 
             <BlurView style={[styles.right, styles.publicBox]} intensity={30} tint='dark' >
-                <Text style={styles.textKg} >the same</Text>
+                <Text style={styles.textKg} >{DATA_START_EXERCISE[day][exercise].weightTwo}</Text>
             </BlurView>
             
         </View>

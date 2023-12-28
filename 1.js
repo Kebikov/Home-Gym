@@ -1,12 +1,20 @@
-// const transferSecInTime = (sec) => {
-//     const minutes = Math.floor(sec / 60);
-//     const seconds = sec - minutes * 60;
+const myJson = [
+    [
+        {name: 'Вася1', age: 40, live: true}, 
+        {name: 'Вася2', age: 40, live: true}
+    ],
+    [
+        {name: 'Вася3', age: 40, live: true},
+        {name: 'Вася4', age: 40, live: true}
+    ]
+]
 
-//     const minutesStr = minutes + '';
-//     const secondsStr = seconds + '';
+const strJson = JSON.stringify(myJson);
 
-//     const resalt = minutesStr.padStart(2, '0') + ':' + secondsStr.padStart(2, '0');
+console.log(strJson);
 
-//     return resalt;
-// }
+const numJson = JSON.parse(strJson);
 
+console.log(numJson);
+
+console.log(numJson[1][1].name);

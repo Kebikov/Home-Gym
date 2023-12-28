@@ -10,17 +10,33 @@ import { colorRootApp } from '@/data/colors';
  * @returns {JSX.Element}
  */
 const DateExercise: FC = () => {
+
+    /**
+     * Текушяя дата строкой.
+     */
+    const date: string = new Date().toISOString();
+    /**
+     * Массив из строки разспличеный по "Т".
+     */
+    const arraySplitT: string[] = date.split('T');
+    /**
+     * Массив из строки разспличеный по "-".
+     * - Получим в формате: ["2023", "12", "28"].
+     */
+    const arraySplitMinus: string[] = arraySplitT[0].split('-');
+
+
 	return (
 		<>
             <View style={styles.dateBox} >
                 <View style={styles.dayBox} >
-                    <Text style={styles.textDate} >03</Text>
+                    <Text style={styles.textDate} >{arraySplitMinus[2]}</Text>
                 </View>
                 <View style={styles.dayBox} >
-                    <Text style={styles.textDate} >12</Text>
+                    <Text style={styles.textDate} >{arraySplitMinus[1]}</Text>
                 </View>
                 <View style={styles.dayBox}>
-                    <Text style={styles.textDate} >2023</Text>
+                    <Text style={styles.textDate} >{arraySplitMinus[0]}</Text>
                 </View>
             </View>
         </>

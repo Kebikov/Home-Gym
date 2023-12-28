@@ -16,7 +16,7 @@ const DaysScreen: FC = () => {
     /**
      * Массив элементов карточек с днями тренировак.
      */
-    const days: JSX.Element[] = DATA_DAYS.map((day, i) => <Day currentDay={day} key={i}/>);
+    const days: JSX.Element[] = DATA_DAYS.map((item, i) => <Day day={item} key={i}/>);
 
 	return (
 		<View style={style.main} >

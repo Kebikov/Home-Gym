@@ -1,4 +1,6 @@
 import { RouteProp } from "@react-navigation/native";
+import { TExercise } from "@/data/dataStartExercise";
+import { TId } from "@/data/dataDays";
 
 export type TypeRootPage = {
 	DaysScreen: undefined;
@@ -6,7 +8,11 @@ export type TypeRootPage = {
         /**
          * Уникальный id набора упражнений.
          */
-        id: string;
+        id: TId;
+        /**
+         * Номер упражнения: '0' | '1' | '2'.
+         */
+        exercise: TExercise;
     };
 };
 

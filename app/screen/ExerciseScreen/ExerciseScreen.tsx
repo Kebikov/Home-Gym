@@ -8,6 +8,8 @@ import WeightExercise from '@/component/WeightExercise/WeightExercise';
 import UpDownWeight from '@/component/UpDownWeight/UpDownWeight';
 import TimeView from '@/component/TimeView/TimeView';
 import Sets from '@/component/Sets/Sets';
+//* data
+import { DATA_START_EXERCISE } from '@/data/dataStartExercise';
 
 /**
  * @screen
@@ -15,14 +17,15 @@ import Sets from '@/component/Sets/Sets';
  * @returns {JSX.Element}
  */
 const ExerciseScreen: FC<TScreenPropExerciseScreen> = ({ route }) => {
-	//const id = route.params.id;
-	const id = 'Day-1';
+
+	const day = route.params.id;
+	const exercise = route.params.exercise;
 
 	return (
 		<View style={styles.main}>
-			<ImageBackground source={require('@/source/img/1.jpg')} style={styles.header} >
+			<ImageBackground source={DATA_START_EXERCISE[day][exercise].img} style={styles.header} >
 				<DateExercise />
-				<WeightExercise />
+				<WeightExercise day={day} exercise={exercise} />
                 <UpDownWeight/>
 			</ImageBackground>
             <Sets/>

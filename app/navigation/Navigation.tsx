@@ -21,9 +21,9 @@ const Navigation: FC = () => {
                     }
                 }}
             >   
-                
-                <Stack.Screen name='ExerciseScreen' component={ExerciseScreen} options={{ animation: 'slide_from_right' }} />
                 <Stack.Screen name='DaysScreen' component={DaysScreen} />
+                <Stack.Screen name='ExerciseScreen' component={ExerciseScreen} options={{ animation: 'slide_from_right' }} />
+                
             </Stack.Navigator>
         </NavigationContainer>
     );

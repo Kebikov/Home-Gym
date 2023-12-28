@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import transferSecInTime from '@/helpers/transferSecInTime';
 import { colorRootApp } from '@/data/colors';
 import { Audio, AVPlaybackSource } from 'expo-av';
-import {soundAudio, ISoundAudio} from '@/data/soundAudio';
+import {soundAudio} from '@/data/soundAudio';
 import { Vibration } from 'react-native';
 
 
@@ -66,50 +66,49 @@ const TimeView: FC<ITimerView> = ({ givenTime }) => {
 	const step: number = 100 / givenTime;
 
 
-	const playSound = async (music: AVPlaybackSource) => {
+    const playSound = async (music: AVPlaybackSource) => {
         try{
-            console.log('play');
-		    const { sound } = await Audio.Sound.createAsync(music);
+            const { sound } = await Audio.Sound.createAsync(music);
             setSoundPlay(sound);
-		    await sound.playAsync();
+            await sound.playAsync();
             Vibration.vibrate([7, 8, 10]);
         } catch(error) {
             console.log('Error in funtion "playSound">>>', error);
         }
-	};
+    };
 
-	useEffect(() => {
-		/**
-		 * Обьект таймера.
-		 */
-		let timer: NodeJS.Timeout | undefined = undefined;
+    useEffect(() => {
+        /**
+         * Обьект таймера.
+         */
+        let timer: NodeJS.Timeout | undefined = undefined;
 
-		if (isStartTimer) {
-			timer = setTimeout(function upTime() {
-				setBalanceTime(balanceTime => {
-					if (balanceTime === 0) {
-						clearTimeout(timer);
+        if (isStartTimer) {
+            timer = setTimeout(function upTime() {
+                setBalanceTime(balanceTime => {
+                    if (balanceTime === 0) {
+                        clearTimeout(timer);
                         playSound(soundAudio.end);
-						return givenTime;
-					} else {
+                        return givenTime;
+                    } else {
                         setPositionProgressInCircle(positionProgressInCircle => positionProgressInCircle + 1);
                         timer = setTimeout(upTime, 1000);
-						return balanceTime - 1;
-					}
-				});
+                        return balanceTime - 1;
+                    }
+                });
                 // setPositionProgressInCircle(positionProgressInCircle => positionProgressInCircle + 1);
-			}, 1000);
-		} else {
-			clearTimeout(timer);
-			setBalanceTime(givenTime);
+            }, 1000);
+        } else {
+            clearTimeout(timer);
+            setBalanceTime(givenTime);
             if(soundPlay) soundPlay.unloadAsync();
-		}
+        }
 
-		return () => {
-			clearTimeout(timer);
+        return () => {
+            clearTimeout(timer);
             if(soundPlay) soundPlay.unloadAsync();
-		};
-	}, [isStartTimer]);
+        };
+    }, [isStartTimer]);
 
 	return (
 		<View style={[styles.container, { height: size }]}>
@@ -126,9 +125,9 @@ const TimeView: FC<ITimerView> = ({ givenTime }) => {
 
 			<Svg width={size} height={size}>
 				<G rotation={'-90'} origin={center}>
-					<Circle stroke={'#fff'} cx={center} cy={center} r={radius} fill={'transparent'} strokeWidth={strokeWidth} />
+					<Circle stroke={colorRootApp.LIGHT_GREY} cx={center} cy={center} r={radius} fill={'transparent'} strokeWidth={strokeWidth} />
 					<Circle
-						stroke={colorRootApp.green}
+						stroke={colorRootApp.YELLOW}
 						cx={center}
 						cy={center}
 						r={radius}
@@ -142,16 +141,16 @@ const TimeView: FC<ITimerView> = ({ givenTime }) => {
 				<Text style={[styles.text, styles.absoluteCenter]}>{transferSecInTime(balanceTime)}</Text>
 			</Svg>
 
-			<Pressable
-				style={styles.containerBox}
-				onPressIn={() => {
+            <Pressable
+                style={styles.containerBox}
+                onPressIn={() => {
                     playSound(soundAudio.play);
-					setPositionProgressInCircle(0);
-					setIsStartTimer(false);
-				}}
-			>
-				<Text style={styles.text}>STOP</Text>
-			</Pressable>
+                    setPositionProgressInCircle(0);
+                    setIsStartTimer(false);
+                }}
+            >
+                <Text style={styles.text}>STOP</Text>
+            </Pressable>
 		</View>
 	);
 };
@@ -173,7 +172,7 @@ const styles = StyleSheet.create({
 
 		borderRadius: 10,
 
-		backgroundColor: colorRootApp.grey
+		backgroundColor: colorRootApp.GREY
 	},
 	text: {
 		fontFamily: 'Sport',
@@ -190,3 +189,6 @@ const styles = StyleSheet.create({
 });
 
 export default TimeView;
+
+
+

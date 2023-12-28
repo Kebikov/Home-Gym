@@ -7,6 +7,7 @@ import DateExercise from '@/component/DateExercise/DateExercise';
 import WeightExercise from '@/component/WeightExercise/WeightExercise';
 import UpDownWeight from '@/component/UpDownWeight/UpDownWeight';
 import TimeView from '@/component/TimeView/TimeView';
+import Sets from '@/component/Sets/Sets';
 
 /**
  * @screen
@@ -24,6 +25,7 @@ const ExerciseScreen: FC<TScreenPropExerciseScreen> = ({ route }) => {
 				<WeightExercise />
                 <UpDownWeight/>
 			</ImageBackground>
+            <Sets/>
             <View style={{flex: 1}}></View>
             <TimeView givenTime={10}/>
 		</View>

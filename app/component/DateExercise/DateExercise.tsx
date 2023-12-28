@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
         marginTop: 10
     },
     dayBox: {
-        backgroundColor: colorRootApp.green_70,
+        backgroundColor: colorRootApp.LIME_70,
         paddingVertical: 2,
         paddingHorizontal: 5,
         borderRadius: 4,

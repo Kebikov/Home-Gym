@@ -17,7 +17,7 @@ const Navigation: FC = () => {
                 screenOptions={{
                     headerShown: false,
                     contentStyle: {
-                        backgroundColor: `${colorRootApp.background}`
+                        backgroundColor: `${colorRootApp.BACKGROUND}`
                     }
                 }}
             >   

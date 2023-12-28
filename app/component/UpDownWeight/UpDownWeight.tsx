@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
         right: 10,
         width: 40,
         height: 150,
-        backgroundColor: colorRootApp.white_40,
+        backgroundColor: colorRootApp.WHITE_40,
         borderRadius: 30
     },
     icon: {

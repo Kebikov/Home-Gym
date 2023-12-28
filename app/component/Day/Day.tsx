@@ -88,14 +88,14 @@ const style = StyleSheet.create({
         paddingVertical: 2,
         borderRadius: 5,
         fontWeight: '600',
-        backgroundColor: `${colorRootApp.green}`,
+        backgroundColor: `${colorRootApp.LIME}`,
         marginLeft: 10,
     },
     textDateBox: {
         flexDirection: 'row',
         alignItems: 'center',
         borderLeftWidth: 3,
-        borderLeftColor: `${colorRootApp.green}`,
+        borderLeftColor: `${colorRootApp.LIME}`,
         marginLeft: 10,
         marginTop: 10,
         height: 20

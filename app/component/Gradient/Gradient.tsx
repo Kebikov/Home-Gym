@@ -31,7 +31,7 @@ const Gradient: FC<IGradient>= ({text, size}) => {
             }
         >
             <LinearGradient
-                colors={['cadetblue', colorRootApp.green]}
+                colors={['cadetblue', colorRootApp.LIME]}
                 style={{ width: '100%', height: size }}
             />
         {/* <Image source={require('@/source/img/3.jpg')} style={{width: '100%', height: 50}}/> */}

@@ -28,7 +28,7 @@ const App: FC = () => {
 		<SafeAreaProvider>
 			<SafeAreaView style={{ flex: 1 }} onLayout={onLayoutRootView}>
 				<Navigation />
-				<StatusBar style='light' backgroundColor={colorRootApp.background} />
+				<StatusBar style='light' backgroundColor={colorRootApp.BACKGROUND} />
 			</SafeAreaView>
 		</SafeAreaProvider>
 	);

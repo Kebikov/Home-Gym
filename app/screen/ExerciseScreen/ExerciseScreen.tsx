@@ -1,6 +1,7 @@
 import { View, StyleSheet, ImageBackground } from 'react-native';
 import React, { FC, useState } from 'react';
 import { TScreenPropExerciseScreen } from '@/navigation/navigation.types';
+import { useAppSelector } from '@/redux/store/hooks';
 //* component
 import DateExercise from '@/component/DateExercise/DateExercise';
 import WeightExercise from '@/component/WeightExercise/WeightExercise';
@@ -13,6 +14,7 @@ import { DATA_START_EXERCISE } from '@/data/dataStartExercise';
 
 export type TNumExercise = 0 | 1 | 2;
 
+//= ExerciseScreen
 /**
  * @screen
  * Экран с днем занятия и упражнениями.

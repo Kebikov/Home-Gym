@@ -18,6 +18,7 @@ interface IWeightExercise {
     exercise: number;
 }
 
+//= WeightExercise
 /**
  * @component
  * Блок с весами снаряда и обшим весом.

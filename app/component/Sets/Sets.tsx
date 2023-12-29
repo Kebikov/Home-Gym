@@ -11,6 +11,7 @@ interface ISets {
     exercise: IExercise;
 }
 
+//= Sets
 /**
  * @component
  * Блок с набором подходов.
@@ -18,7 +19,6 @@ interface ISets {
  * @returns 
  */
 const Sets: FC<ISets> = ({exercise}) => {
-    // {"amount": 12, "amountExercise": 5, "burpee": 18, "description": "третий упор от сиденья", "img": 8, "title": "Битепс, сидя с упором в скамью.", "weightNeck": "1.6", "weightOne": "4+3", "weightTwo": "4+3+0"}
 
     let set = [];
     const amount = exercise.amount;

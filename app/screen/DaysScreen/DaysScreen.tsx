@@ -1,7 +1,9 @@
 import { View, Text, StyleSheet } from 'react-native';
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { DATA_DAYS } from '@/data/dataDays';
 import Gradient from '@/component/Gradient/Gradient';
+import { useAppDispatch } from '@/redux/store/hooks';
+import { setSliceExercise } from '@/redux/slice/sets.slice';
 //* component
 import Day from '@/component/Day/Day';
 

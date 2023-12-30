@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { FC, useState, useEffect, useCallback } from 'react';
+import { FC, useCallback } from 'react';
 import { useFonts } from 'expo-font';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { COLOR_ROOT_APP } from '@/data/colors';

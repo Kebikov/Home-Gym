@@ -98,6 +98,3 @@ export const DATA_START_EXERCISE: Array<IExercise[]> = [
     ],[],[],[]
 ];
 
-
-
-// 'Day-1' : ['Exercise-1', 'Exercise-2', 'Exercise-3'];

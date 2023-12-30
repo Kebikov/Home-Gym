@@ -2,31 +2,44 @@ import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from '../store/store';
 
-interface ISliceExercise {
+export interface ISliceExercise {
     day: number;
-    exerciseOne: {
-        one: boolean;
-        two: boolean;
-        three: boolean;
+    1: {
+        1: boolean;
+        2: boolean;
+        3: boolean;
     };
-    exerciseTwo: {
-        one: boolean;
-        two: boolean;
-        three: boolean;
+    2: {
+        1: boolean;
+        2: boolean;
+        3: boolean;
     };
-    exerciseThree: {
-        one: boolean;
-        two: boolean;
-        three: boolean;
+    '3': {
+        1: boolean;
+        2: boolean;
+        3: boolean;
     };
 }
 
 export interface ISlice {
-    exercise: Partial<ISliceExercise>
+    /**
+     * Обьект для отображения выполненных подходов в день тренировки.
+     */
+    exercise: Partial<ISliceExercise>;
+    /**
+     * Текуший день тренировки которая проводится.
+     */
+    currentDayExercise: number | undefined;
+    /**
+     * Текуший номер упражннения, тренировки которая проводится.
+     */
+    currentNumberExercise: number | undefined;
 }
 
 const initialState: ISlice = {
-    exercise: {}
+    exercise: {},
+    currentDayExercise: undefined,
+    currentNumberExercise: undefined
 }
 
 const setsSlice = createSlice({
@@ -34,15 +47,28 @@ const setsSlice = createSlice({
     initialState,
     reducers: {
 
-    setSliceExercise: (state, actions) => {
-            state.exercise = {...state.exercise, ...actions.payload};
+        setSliceExercise: (state, actions: PayloadAction<Partial<ISliceExercise> | 'remove'> ) => {
+            if(actions.payload === 'remove') {
+                state.exercise = {};
+            } else {
+                state.exercise = {...state.exercise, ...actions.payload};
+            }
+            console.log('',state.exercise);
+        },
+        setSliceCurrentDayExercise: (state, actions: PayloadAction<number | undefined> ) => {
+            state.currentDayExercise = actions.payload;
+        },
+        setSliceCurrentNumberExercise: (state, actions: PayloadAction<number | undefined> ) => {
+            state.currentNumberExercise = actions.payload;
         }
+
     }
 });
 
 
 export default setsSlice.reducer;
-export const {setSliceExercise} = setsSlice.actions;
-
-
-export const selectCount = (state: RootState) => state.setsSlice.exercise;
+export const {
+    setSliceExercise,
+    setSliceCurrentDayExercise,
+    setSliceCurrentNumberExercise
+} = setsSlice.actions;

@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import setsSlice from '@/redux/slice/sets.slice';
 
+
 const store = configureStore({
     reducer: {setsSlice},
     middleware: getDefaultMiddleware => getDefaultMiddleware(),

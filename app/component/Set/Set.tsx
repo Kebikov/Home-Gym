@@ -17,6 +17,7 @@ interface ISet {
     descriptions: string;
 }
 
+//= Set
 /**
  * @component
  * Блок с одним повтором упражнения.

@@ -1,6 +1,9 @@
 const myJson = [
     [
-        {name: 'Вася1', age: 40, live: true}, 
+        {
+            1: 'Вася1', 
+            age: 40, 
+            live: true}, 
         {name: 'Вася2', age: 40, live: true}
     ],
     [
@@ -9,12 +12,7 @@ const myJson = [
     ]
 ]
 
-const strJson = JSON.stringify(myJson);
 
-console.log(strJson);
 
-const numJson = JSON.parse(strJson);
+console.log(myJson[0][0][1]);
 
-console.log(numJson);
-
-console.log(numJson[1][1].name);

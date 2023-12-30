@@ -1,6 +1,8 @@
 import { View, Text, StyleSheet } from 'react-native';
 import React, { FC } from 'react';
 import { IExercise } from '@/data/dataStartExercise';
+//* redux
+import { setSliceExercise } from '@/redux/slice/sets.slice';
 //* component
 import Set from '../Set/Set';
 
@@ -20,7 +22,13 @@ interface ISets {
  */
 const Sets: FC<ISets> = ({exercise}) => {
 
+    /**
+     * Массив с повторами в упражнениях.
+     */
     let set = [];
+    /**
+     * Количество повторов в упражнении.
+     */
     const amount = exercise.amount;
 
     switch(amount) {
@@ -44,8 +52,8 @@ const Sets: FC<ISets> = ({exercise}) => {
 	return (
 		<View style={styles.container} >
 			<Set amount={set[2]} title={exercise.title} descriptions={exercise.description} />
-            <Set amount={set[1]} title={exercise.title}  descriptions={exercise.description} />
-            <Set amount={set[0]} title={exercise.title}  descriptions={exercise.description} />
+            <Set amount={set[1]} title={exercise.title} descriptions={exercise.description} />
+            <Set amount={set[0]} title={exercise.title} descriptions={exercise.description} />
             {
                 exercise.burpee 
                 ?

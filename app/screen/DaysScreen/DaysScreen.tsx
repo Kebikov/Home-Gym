@@ -7,6 +7,8 @@ import { setSliceExercise } from '@/redux/slice/sets.slice';
 //* component
 import Day from '@/component/Day/Day';
 
+
+//: DaysScreen
 /**
  * @screen
  * Экран с карточками, дни с наборами упражнений.

@@ -6,6 +6,7 @@ import { ISliceExercise } from '@/redux/slice/sets.slice';
 //* redux
 import { useAppSelector, useAppDispatch } from '@/redux/store/hooks';
 import { setSliceExercise } from '@/redux/slice/sets.slice';
+import { TExercise } from '@/data/dataStartExercise';
 //* component
 import DateExercise from '@/component/DateExercise/DateExercise';
 import WeightExercise from '@/component/WeightExercise/WeightExercise';
@@ -26,28 +27,24 @@ export type TNumExercise = 0 | 1 | 2;
  */
 const ExerciseScreen: FC<TScreenPropExerciseScreen> = ({ route }) => {
 
+    const exerciseArray: Array<TExercise> = ['EXERCISE_1', 'EXERCISE_2', 'EXERCISE_3'];
+
     /**
      * Изминения состояния выбора упражнения.
      * @param selectExercise - Число которое используется для выбора упражнения из массива.
      */
     const [selectExercise, setSelectExercise] = useState<TNumExercise>(0);
+    /**
+     * Обьект для отображения выполненных подходов в день тренировки.
+     */
     const exerciseObject = useAppSelector(state => state.setsSlice.exercise);
     const dispatch = useAppDispatch();
 
     /**
-     * День занятий, в формате "0" | "1" | ...
+     * День занятий, в формате "DAY_1" | "DAY_2" | ...
      */
 	const day = route.params.day;
 
-    /**
-     * Функция сохранения данных в AsyncStorage.
-     * - Очишение state.setsSlice.exercise.
-     */
-    async function saveInAsyncStorage() {
-        const exerciseJSON = JSON.stringify(exerciseObject);
-        await AsyncStorage.setItem(day, exerciseJSON);
-        dispatch( setSliceExercise('remove') );
-    }
 
     useEffect(() => {
         /**
@@ -66,6 +63,15 @@ const ExerciseScreen: FC<TScreenPropExerciseScreen> = ({ route }) => {
         }
         checkAsyncStorage();
         return () => {
+            /**
+             * Функция сохранения данных в AsyncStorage.
+             * - Очишение state.setsSlice.exercise.
+             */
+            async function saveInAsyncStorage() {
+                const exerciseJSON = JSON.stringify(exerciseObject);
+                await AsyncStorage.setItem(day, exerciseJSON);
+                dispatch( setSliceExercise('remove') );
+            }
             saveInAsyncStorage();
         }
     }, []);
@@ -73,12 +79,12 @@ const ExerciseScreen: FC<TScreenPropExerciseScreen> = ({ route }) => {
 	return (
 		<View style={styles.main}>
             <BottomMenu setSelectExercise={setSelectExercise} />
-			<ImageBackground source={DATA_START_EXERCISE[day][selectExercise].img} style={styles.header} >
+			<ImageBackground source={DATA_START_EXERCISE[day][exerciseArray[selectExercise]].img} style={styles.header} >
 				<DateExercise />
 				<WeightExercise day={day} exercise={selectExercise} />
                 <UpDownWeight/>
 			</ImageBackground>
-            <Sets exercise={DATA_START_EXERCISE[day][selectExercise]} />
+            <Sets exercise={DATA_START_EXERCISE[day][exerciseArray[selectExercise]]} />
             <View style={{flex: 1}}></View>
             <TimeView givenTime={10}/>
 		</View>

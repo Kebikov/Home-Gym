@@ -1,4 +1,4 @@
-export type TDay = '0' | '1' | '2' | '3' | '4';
+export type TDay = 'DAY_1' | 'DAY_2' | 'DAY_3' | 'DAY_4' | 'DAY_5';
 
 /**
  * @interface
@@ -6,7 +6,7 @@ export type TDay = '0' | '1' | '2' | '3' | '4';
  */
 export interface IDataDays {
     /**
-     * День занятий, в формате "0" | "1"  | ...
+     * День занятий, в формате "DAY_1" | "DAY_2"  | ...
      */
     day: TDay;
     /**
@@ -36,7 +36,7 @@ export interface IDataDays {
  */
 export const DATA_DAYS: Array<IDataDays> = [
     {
-        day: '0',
+        day: 'DAY_1',
         img: require(`@/source/img/1.jpg`),
         date: '23.12.2023',
         title: 'Day One',
@@ -44,7 +44,7 @@ export const DATA_DAYS: Array<IDataDays> = [
         lastExercise: false
     },
     {
-        day: '1',
+        day: 'DAY_2',
         img: require(`@/source/img/2.jpg`),
         date: '23.12.2023',
         title: 'Day Two',
@@ -52,7 +52,7 @@ export const DATA_DAYS: Array<IDataDays> = [
         lastExercise: true
     },
     {
-        day: '2',
+        day: 'DAY_3',
         img: require(`@/source/img/3.jpg`),
         date: '23.12.2023',
         title: 'Day Three',
@@ -60,7 +60,7 @@ export const DATA_DAYS: Array<IDataDays> = [
         lastExercise: false
     },
     {
-        day: '3',
+        day: 'DAY_4',
         img: require(`@/source/img/4.jpg`),
         date: '23.12.2023',
         title: 'Day Four',
@@ -68,7 +68,7 @@ export const DATA_DAYS: Array<IDataDays> = [
         lastExercise: false
     },
     {
-        day: '4',
+        day: 'DAY_5',
         img: require(`@/source/img/5.jpg`),
         date: '23.12.2023',
         title: 'Day Five',

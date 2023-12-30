@@ -4,6 +4,7 @@ import { useFonts } from 'expo-font';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { COLOR_ROOT_APP } from '@/data/colors';
 import * as SplashScreen from 'expo-splash-screen';
+import firstLoadData from '@/helpers/firstLoadData';
 //* component
 import Navigation from '@/navigation/Navigation';
 import { Provider } from 'react-redux';
@@ -18,6 +19,7 @@ const App: FC = () => {
 
 	const onLayoutRootView = useCallback(async () => {
 		if (fontsLoaded) {
+            firstLoadData();
 			await SplashScreen.hideAsync();
 		}
 	}, [fontsLoaded]);

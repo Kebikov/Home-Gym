@@ -5,7 +5,7 @@ export type TypeRootPage = {
 	DaysScreen: undefined;
 	ExerciseScreen: {
         /**
-         * День занятий, в формате "0" | "1"  | ...
+         * День занятий, в формате "DAY_1" | "DAY_2"  | ...
          */
         day: TDay;
     };

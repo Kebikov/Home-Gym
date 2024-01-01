@@ -1,9 +1,11 @@
-import { View, Text, StyleSheet } from 'react-native';
-import React, { FC, useEffect } from 'react';
+import { View, StyleSheet } from 'react-native';
+import React, { FC, useEffect, useState } from 'react';
 import { DATA_DAYS } from '@/data/dataDays';
 import Gradient from '@/component/Gradient/Gradient';
-import { useAppDispatch } from '@/redux/store/hooks';
-import { setSliceExercise } from '@/redux/slice/sets.slice';
+//* SQL
+import DBManagment from '@/SQLite/DBManagment';
+import COMMAND_SQL from '@/SQLite/CommandSQL/commandSQL';
+import Configuration from '@/SQLite/DBManagment/сonfiguration';
 //* component
 import Day from '@/component/Day/Day';
 
@@ -16,11 +18,26 @@ import Day from '@/component/Day/Day';
  * @returns {JSX.Element}
  */
 const DaysScreen: FC = () => {
+    console.log('----------------------------------------------------------------');
+    /**
+     * @param stateDays Массив с данными дней.
+     */
+    const [stateDays, setStateDays] = useState([]);
 
     /**
      * Массив элементов карточек с днями тренировак.
      */
     const days: JSX.Element[] = DATA_DAYS.map((item, i) => <Day day={item} key={i}/>);
+
+    useEffect(() => {
+        async function getData() {
+            const fox = await DBManagment.select(Configuration.TABLE__DAYS);
+            console.log('FOX >>>', fox);
+        }
+
+        getData();
+    },[]);
+
 
 	return (
 		<View style={style.main} >

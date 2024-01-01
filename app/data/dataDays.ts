@@ -38,7 +38,7 @@ export const DATA_DAYS: Array<IDataDays> = [
     {
         day: 'DAY_1',
         img: require(`@/source/img/1.jpg`),
-        date: '23.12.2023',
+        date: '2023-12-23',
         title: 'Day One',
         description: 'Битепс / Ноги / Грудь',
         lastExercise: false
@@ -49,7 +49,7 @@ export const DATA_DAYS: Array<IDataDays> = [
         date: '23.12.2023',
         title: 'Day Two',
         description: 'Грудь / Битепс / Плечи',
-        lastExercise: true
+        lastExercise: false
     },
     {
         day: 'DAY_3',

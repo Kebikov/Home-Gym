@@ -37,7 +37,7 @@ export interface IDataDays {
 export const DATA_DAYS: Array<IDataDays> = [
     {
         day: 'DAY_1',
-        img: require(`@/source/img/1.jpg`),
+        img: require(`@/source/img/daysScreen/daysScreen_1.jpg`),
         date: '2023-12-23',
         title: 'Day One',
         description: 'Битепс / Ноги / Грудь',
@@ -45,7 +45,7 @@ export const DATA_DAYS: Array<IDataDays> = [
     },
     {
         day: 'DAY_2',
-        img: require(`@/source/img/2.jpg`),
+        img: require(`@/source/img/daysScreen/daysScreen_2.jpg`),
         date: '23.12.2023',
         title: 'Day Two',
         description: 'Грудь / Битепс / Плечи',
@@ -53,7 +53,7 @@ export const DATA_DAYS: Array<IDataDays> = [
     },
     {
         day: 'DAY_3',
-        img: require(`@/source/img/3.jpg`),
+        img: require(`@/source/img/daysScreen/daysScreen_3.jpg`),
         date: '23.12.2023',
         title: 'Day Three',
         description: 'Битепс / Грудь / Ноги',
@@ -61,7 +61,7 @@ export const DATA_DAYS: Array<IDataDays> = [
     },
     {
         day: 'DAY_4',
-        img: require(`@/source/img/4.jpg`),
+        img: require(`@/source/img/daysScreen/daysScreen_4.jpg`),
         date: '23.12.2023',
         title: 'Day Four',
         description: 'Плечи / Грудь / Битепс',
@@ -69,7 +69,7 @@ export const DATA_DAYS: Array<IDataDays> = [
     },
     {
         day: 'DAY_5',
-        img: require(`@/source/img/5.jpg`),
+        img: require(`@/source/img/daysScreen/daysScreen_5.jpg`),
         date: '23.12.2023',
         title: 'Day Five',
         description: 'Грудь / Плечи / Спина',

@@ -8,33 +8,41 @@ import createDataBase from "./createDataBase";
  * Выполнение команд SQL.
  * @param command Команда выполнения SQL.
  * @example await inset(command)
- * @returns Вывод в консоль результата выполнения или ошибки выполнения.
+ * @returns Promise > Данные запроса.
  */
 export const inset = async (command: string) => {
+    return new Promise((resolve, reject) => {
+        checkExistenceDataBase()
+            .then(isExistTable => {
+                if(!isExistTable) {
+                    reject(null);
+                    return;
+                }
 
-	const dirInfo = await checkExistenceDataBase();
+                const db = SQLite.openDatabase(Configuration.DB_NAME);
 
-	if (!dirInfo) {
-		await createDataBase();
-	}
+                db.transaction(tx => {
+                    tx.executeSql(
+                        `${command}`,
+                        [],
+                        (_, { rows }) => {
+                            resolve(rows._array);
+                        },
+                        (_, { message }) => {
+                            console.log(message);
+                            reject(message);
+                            return false;
+                        }
+                    );
+                });
 
-	const db = SQLite.openDatabase(Configuration.DB_NAME);
+            })
+            .catch(error => {
+                console.error(error);
+                reject(error);
+            });
+    });
 
-	db.transaction(tx => {
-		tx.executeSql(
-			`${command}`,
-			[],
-			(_, { rows }) => {
-				const data = rows;
-				console.log(data);
-			},
-			(_, { message }) => {
-				console.log(message);
-				return false;
-			}
-		);
-	});
-    
 };
 
 export default inset;

@@ -1,10 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
-import { FC, useCallback, useEffect } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 import { useFonts } from 'expo-font';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { COLOR_ROOT_APP } from '@/data/colors';
 import * as SplashScreen from 'expo-splash-screen';
-import firstLoadData from '@/helpers/firstLoadData';
+import { deleteData, createData} from '@/helpers/firstLoadData';
 //* SQL
 import DBManagment from '@/SQLite/DBManagment';
 import COMMAND_SQL from '@/SQLite/CommandSQL/commandSQL';
@@ -19,58 +19,31 @@ SplashScreen.preventAutoHideAsync();
 
 
 const App: FC = () => {
+    console.log('APP');
 
 	const [fontsLoaded] = useFonts({
 		'Sport': require('@/source/fonts/BebasNeue.ttf')
 	});
 
+    const [load, setLoad] = useState<boolean>(false);
+
 	const onLayoutRootView = useCallback(async () => {
 		if (fontsLoaded) {
-            firstLoadData();
 			await SplashScreen.hideAsync();
 		}
 	}, [fontsLoaded]);
 
     useEffect(() => {
-        const deleteData = async () => {
-            //* Просмотр созданных файлов
-            await DBManagment.viewFolders('SQLite');
-            await DBManagment.select(Configuration.TABLE_EXERCISE);
-            await DBManagment.select(Configuration.TABLE__DAYS);
-        };
+        async function first() {
+            //const result: boolean = await deleteData();
+            const result: boolean = await createData(); 
+            setLoad(result);
+        } 
 
-        const createData = async () => {
-            // Проверка, есть ли база данных.
-            const isExisted = await DBManagment.checkExistenceDataBase();
-            // Если есть, прекрашаем работу функции.
-            if(isExisted) return;
-            // Создание базы данных.
-            await DBManagment.createDataBase();
-
-            // Создание таблицы с днями.
-            await DBManagment.inset(COMMAND_SQL.createTableDays);
-
-            // Создание таблицы с упражнениями.
-            await DBManagment.inset(COMMAND_SQL.createTableExercise);
-
-            // Заполнение начальными данными таблицы с днями.
-            await DBManagment.addDataStartInTableDays();
-
-            // Заполнение начальными данными таблицы с упражнениями.
-            await DBManagment.addDataStartInTableExercise();
-
-            //* Просмотр созданных файлов
-            await DBManagment.viewFolders('SQLite');
-            
-            //* Просмотр созданных таблиц в базе данных
-            await DBManagment.showAllTable();  
-        };
-
-        createData();
-        //deleteData();
+        first();
     },[]);
 
-    if (!fontsLoaded) {
+    if (!fontsLoaded || !load) {
 		return null;
 	}
 

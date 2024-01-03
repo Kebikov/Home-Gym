@@ -1,81 +1,77 @@
 import { View, Text, StyleSheet } from 'react-native';
-import { BlurView } from 'expo-blur';
 import React, { FC } from 'react';
-import { TDay } from '@/data/dataDays';
+import { COLOR_ROOT_APP } from '@/data/colors';
+import { IExercise } from '@/data/dataStartExercise';
 //* helpers
 import calculationTotalWeight from '@/helpers/calculationTotalWeight';
-//* data
-import { DATA_START_EXERCISE } from '@/data/dataStartExercise';
 
 interface IWeightExercise {
     /**
-     * День занятий, в формате "0" | "1"  | ...
+     * Обьект упражнения.
      */
-    day: TDay;
-    /**
-     * Номер упражнения.
-     */
-    exercise: number;
+    exercise: IExercise;
 }
 
 //= WeightExercise
 /**
  * @component
  * Блок с весами снаряда и обшим весом.
- * @param day - День занятий, в формате "0" | "1"  | ...
  * @param exercise - Номер упражнения.
  * @example <WeightExercise/>
  * @returns {JSX.Element}
  */
-const WeightExercise: FC<IWeightExercise> = ({day, exercise}) => {
+const WeightExercise: FC<IWeightExercise> = ({exercise}) => {
 
     /**
      * Вес первой стороны блинов грифа.
      */
-    let weightOne: number;
+    let weightOne: number | '-';
     /**
      * Вес второй стороны блинов грифа.
      */
-    let weightTwo: number | 'THE SAME';
+    let weightTwo: number | 'THE SAME' | '-';
     /**
      * Обший вес снаряда, гриф + блины.
      */
-    let weightTotal: number;
+    let weightTotal: number | '-';
 
     // если вес грифа равен "0"
-    if(DATA_START_EXERCISE[day][exercise].weightNeck === '0') {
-        weightOne = calculationTotalWeight(DATA_START_EXERCISE[day][exercise].weightOne);
-        weightTwo = 'THE SAME';
-        weightTotal = weightOne;
+    if(exercise.weightNeck === '0') {
+        weightOne = '-';
+        weightTwo = '-';
+        weightTotal = '-';
     } else {
-        weightOne = calculationTotalWeight(DATA_START_EXERCISE[day][exercise].weightOne);
+        weightOne = calculationTotalWeight(exercise.weightOne);
 
-        if(DATA_START_EXERCISE[day][exercise].weightTwo === 'THE SAME') {
+        if(exercise.weightTwo === '-') {
             weightTwo = weightOne;
         } else {
-            weightTwo = calculationTotalWeight(DATA_START_EXERCISE[day][exercise].weightTwo);
+            weightTwo = calculationTotalWeight(exercise.weightTwo);
         }
     
-        weightTotal = weightOne + weightTwo + Number(DATA_START_EXERCISE[day][exercise].weightNeck);
+        weightTotal = weightOne + weightTwo + Number(exercise.weightNeck);
+        weightTotal = Number( weightTotal.toFixed(1) ); 
     }
 
-    
+    if(!exercise) {
+        return null;
+    }
+
+
 	return (
         <View style={styles.main} >
-            
-            <BlurView style={[styles.left, styles.publicBox]} intensity={30} tint='dark' >
-                <Text style={styles.textKg} >{DATA_START_EXERCISE[day][exercise].weightOne}</Text>
-            </BlurView>
+            <View style={[styles.left, styles.publicBox]} >
+                <Text style={styles.textKg} >{exercise.weightOne}</Text>
+            </View>
 
-            <BlurView style={[styles.center, styles.publicBox]} intensity={30} tint='dark' >
-                <Text style={styles.textWeight}>{weightTotal}</Text>
-                <Text style={styles.textKg} >KG</Text>
-            </BlurView>
+            <View style={[styles.center, styles.publicBox]} >
+                <Text style={styles.textWeight} >{weightTotal}</Text>
+                <Text style={styles.textKg} >{`KG / ${exercise.amountExercise}`}</Text>
+            </View>
 
-            <BlurView style={[styles.right, styles.publicBox]} intensity={30} tint='dark' >
-                <Text style={styles.textKg} >{DATA_START_EXERCISE[day][exercise].weightTwo}</Text>
-            </BlurView>
-            
+            <View style={[styles.right, styles.publicBox]} >
+                <Text style={styles.textKg} >{exercise.weightTwo === '-' ? 'THE SOME' : exercise.weightTwo}</Text>
+            </View>
         </View>
 	);
 };
@@ -94,7 +90,8 @@ const styles = StyleSheet.create({
     publicBox: {
         justifyContent: 'center',
         alignItems: 'center',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        backgroundColor: COLOR_ROOT_APP.MEDIUM_GREY_50
     },
     absolute: {
         position: 'absolute',

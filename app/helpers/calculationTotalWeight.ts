@@ -34,7 +34,7 @@ const calculationTotalWeight = (str: string): number => {
 		return resalt + weight;
 	}, 0);
 
-	return resalt;
+	return Number( resalt.toFixed(1) );
 };
 
 export default calculationTotalWeight;

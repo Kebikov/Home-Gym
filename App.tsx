@@ -5,10 +5,6 @@ import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { COLOR_ROOT_APP } from '@/data/colors';
 import * as SplashScreen from 'expo-splash-screen';
 import { deleteData, createData} from '@/helpers/firstLoadData';
-//* SQL
-import DBManagment from '@/SQLite/DBManagment';
-import COMMAND_SQL from '@/SQLite/CommandSQL/commandSQL';
-import Configuration from '@/SQLite/DBManagment/сonfiguration';
 //* component
 import Navigation from '@/navigation/Navigation';
 import { Provider } from 'react-redux';
@@ -24,7 +20,7 @@ const App: FC = () => {
 	const [fontsLoaded] = useFonts({
 		'Sport': require('@/source/fonts/BebasNeue.ttf')
 	});
-
+    console.log('',fontsLoaded);
     const [load, setLoad] = useState<boolean>(false);
 
 	const onLayoutRootView = useCallback(async () => {

@@ -1,5 +1,15 @@
 interface ICOLOR_ROOT_APP {
-    [key : string]: string;
+    BACKGROUND: string;
+    LIME: string;
+    LIME_70: string;
+    WHITE_40: string;
+    GREY: string;
+    DARK_GREY: string;
+    LIGHT_GREY: string;
+    MEDIUM_GREY: string;
+    MEDIUM_GREY_50: string;
+    ARCTIC: string;
+    YELLOW: string;
 }
 
 export const COLOR_ROOT_APP: ICOLOR_ROOT_APP = {
@@ -11,6 +21,7 @@ export const COLOR_ROOT_APP: ICOLOR_ROOT_APP = {
     DARK_GREY: '#28292c',
     LIGHT_GREY: '#ececec',
     MEDIUM_GREY: '#6f7173',
+    MEDIUM_GREY_50: 'rgba(111, 113, 115, .7)',
     ARCTIC: '#5be1ea',
     YELLOW: '#F0D82A',
 };

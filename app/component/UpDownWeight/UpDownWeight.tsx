@@ -2,18 +2,23 @@ import { View, Text, StyleSheet, Image } from 'react-native';
 import React, { FC } from 'react';
 import { COLOR_ROOT_APP } from '@/data/colors';
 import { icon } from '@/source/icon/icon';
+import { TIsUp } from '@/data/dataStartExercise';
+
+interface IUpDownWeight {
+    valueIcon: TIsUp;
+}
 
 /**
  * @component
  * Блок с кнопками, увеличить вес, уменьшить вес, заметка.
  * @return {JSX.Element}
  */
-const UpDownWeight: FC = () => {
+const UpDownWeight: FC<IUpDownWeight> = ({valueIcon}) => {
 	return (
 		<View style={styles.main} >
-			<Image source={icon.up} style={[styles.icon, {top: 5}]} />
-            <Image source={icon.question} style={[styles.icon, {top: 60}]} />
-            <Image source={icon.down} style={[styles.icon, {bottom: 5}]} />
+			<Image source={valueIcon === 'up' ? icon.up_active : icon.up} style={[styles.icon, {top: 5}]} />
+            <Image source={valueIcon === '?' ?  icon.question_active : icon.question} style={[styles.icon, {top: 60}]} />
+            <Image source={valueIcon === '?' ? icon.down_active : icon.down} style={[styles.icon, {bottom: 5}]} />
 		</View>
 	);
 };
@@ -32,7 +37,8 @@ const styles = StyleSheet.create({
         width: 30,
         height: 30,
         position: 'absolute',
-        left: 4
+        left: 4,
+        opacity: .8
     }
 });
 

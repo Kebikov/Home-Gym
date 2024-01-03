@@ -25,7 +25,6 @@ const DaysScreen: FC = () => {
      */
     const [stateDays, setStateDays] = useState<Array<IDataDays> | []>([]);
 
-    console.log(stateDays);
     /**
      * Массив элементов карточек с днями тренировак.
      */

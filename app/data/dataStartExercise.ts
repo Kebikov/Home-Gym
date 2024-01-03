@@ -6,7 +6,7 @@ import { TDay } from "./dataDays";
 type TWeightNeck = '1.6' | '7.3' | '0' | '5';
 export type TExercise = 'EXERCISE_1' | 'EXERCISE_2' | 'EXERCISE_3';
 
-type TIsUp = 'up' | 'down' | '?' | 'not';
+export type TIsUp = 'up' | 'down' | '?' | 'not';
 
 /**
  * Обьект одного упражнения.

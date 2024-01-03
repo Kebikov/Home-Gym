@@ -1,6 +1,7 @@
-import { View, Text, StyleSheet } from 'react-native';
-import React, { FC } from 'react';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
+import React, { FC, useState } from 'react';
 import { COLOR_ROOT_APP } from '@/data/colors';
+import COMMAND_SQL from '@/SQLite/CommandSQL/commandSQL';
 
 interface ISet {
     /**
@@ -15,6 +16,12 @@ interface ISet {
      * Описание под титульным текстом.
      */
     descriptions: string;
+    /**
+     * Уникальное имя поля.
+     * - Формируется как обшее название упражнения + номер по очередности.
+     * - Пример: 'EXERCISE_1' + 1.
+     */
+    id: string;
 }
 
 //= Set
@@ -27,9 +34,12 @@ interface ISet {
  * @example <Set amount={#} title={#} descriptions={#} />
  * @returns {JSX.Element}
  */
-const Set: FC<ISet> = ({amount, title, descriptions}) => {
+const Set: FC<ISet> = ({amount, title, descriptions, id}) => {
+    console.log('ID >>> ', id);
+    const [isPush, setIsPush] = useState<boolean>(false);
+
 	return (
-		<View style={styles.container} >
+		<Pressable style={[styles.container, isPush ? {borderColor: COLOR_ROOT_APP.LIME_70, borderWidth: 3} : null]} onPress={() => setIsPush(state => !state)} >
             <View style={styles.rapBox} >
                 <Text style={styles.textRap} >{amount}</Text>
             </View>
@@ -37,7 +47,7 @@ const Set: FC<ISet> = ({amount, title, descriptions}) => {
                 <Text style={styles.textTitle} >{title}</Text>
                 <Text style={styles.textDescriptions} >{descriptions}</Text>
             </View>
-		</View>
+		</Pressable>
 	);
 };
 

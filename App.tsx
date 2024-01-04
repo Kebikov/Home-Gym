@@ -15,12 +15,11 @@ SplashScreen.preventAutoHideAsync();
 
 
 const App: FC = () => {
-    console.log('APP');
 
 	const [fontsLoaded] = useFonts({
 		'Sport': require('@/source/fonts/BebasNeue.ttf')
 	});
-    console.log('',fontsLoaded);
+
     const [load, setLoad] = useState<boolean>(false);
 
 	const onLayoutRootView = useCallback(async () => {

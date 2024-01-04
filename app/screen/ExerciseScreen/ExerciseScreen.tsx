@@ -4,6 +4,9 @@ import { TScreenPropExerciseScreen } from '@/navigation/navigation.types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { IExercise } from '@/data/dataStartExercise';
 import { TExercise } from '@/data/dataStartExercise';
+//* redux
+import { useAppDispatch, useAppSelector } from '@/redux/store/hooks';
+import { setSliceExerciseArray } from '@/redux/slice/sets.slice';
 //* component
 import DateExercise from '@/component/DateExercise/DateExercise';
 import WeightExercise from '@/component/WeightExercise/WeightExercise';
@@ -17,37 +20,42 @@ import Configuration from '@/SQLite/DBManagment/сonfiguration';
 
 export type TNumExercise = 0 | 1 | 2;
 
-//: ExerciseScreen
+
 /**
  * @screen
  * Экран с днем занятия и упражнениями.
  * @returns {JSX.Element}
  */
-//= ExerciseScreen
+//: ExerciseScreen
 const ExerciseScreen: FC<TScreenPropExerciseScreen> = ({ route }) => {
-    console.log('-----------------------------------------------',); 
-	const exerciseArray: Array<TExercise> = ['EXERCISE_1', 'EXERCISE_2', 'EXERCISE_3'];
+
+	const exerciseValue: Array<TExercise> = ['EXERCISE_1', 'EXERCISE_2', 'EXERCISE_3'];
+
 	/**
-	 * @param dataDay Массив с данными о упражнениях в данный день.
+	 * @param exerciseArray Массив с данными о упражнениях в данный день.
 	 */
-	const [dataDay, setDataDay] = useState<Array<IExercise> | []>([]);
+	const exerciseArray = useAppSelector(state => state.setsSlice.exerciseArray);
 	/**
 	 * Изминения состояния выбора упражнения.
 	 * @param selectExercise - Число которое используется для выбора упражнения из массива.
 	 */
 	const [selectExercise, setSelectExercise] = useState<TNumExercise>(0);
+    const dispatch = useAppDispatch();
 
 	/**
-	 * День занятий, в формате "DAY_1" | "DAY_2" | ...
+	 * День занятий который propse полученый при переходе, в формате "DAY_1" | "DAY_2" | ...
 	 */
 	const dayExercise = route.params.day;
 
-	let exercise = dataDay.find(item => item.exercise === exerciseArray[selectExercise]);
+    /**
+     * Обьект выбранного упрожнения.
+     */
+	let exercise = exerciseArray.find(item => item.exercise === exerciseValue[selectExercise]);
 
 	useEffect(() => {
 		const getData = async () => {
 			const data: Array<IExercise> = await DBManagment.inset(`SELECT * FROM ${Configuration.TABLE_EXERCISE} WHERE day = "${dayExercise}"`);
-			setDataDay(data);
+            dispatch(setSliceExerciseArray(data));
 		};
 		getData();
 	}, []);

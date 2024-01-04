@@ -2,6 +2,10 @@ import { View, Text, StyleSheet, Pressable } from 'react-native';
 import React, { FC, useState } from 'react';
 import { COLOR_ROOT_APP } from '@/data/colors';
 import COMMAND_SQL from '@/SQLite/CommandSQL/commandSQL';
+//* redux
+import { useAppSelector, useAppDispatch } from '@/redux/store/hooks';
+import { setSlicePushSetId } from '@/redux/slice/sets.slice';
+import { useDispatch } from 'react-redux';
 
 interface ISet {
     /**
@@ -24,7 +28,7 @@ interface ISet {
     id: string;
 }
 
-//= Set
+
 /**
  * @component
  * Блок с одним повтором упражнения.
@@ -34,12 +38,29 @@ interface ISet {
  * @example <Set amount={#} title={#} descriptions={#} />
  * @returns {JSX.Element}
  */
+//= Set 
 const Set: FC<ISet> = ({amount, title, descriptions, id}) => {
-    console.log('ID >>> ', id);
-    const [isPush, setIsPush] = useState<boolean>(false);
 
+    const dispatch = useDispatch();
+    /**
+     * Массив с нажатыми id.
+     */
+    const pushSetId = useAppSelector(state => state.setsSlice.pushSetId);
+    /**
+     * Переменная с результатом, есть ли совпадения в массиве с нажатыми id, нашего текушего id.
+     */
+    const isPush: boolean = pushSetId.includes(id);
+
+    const onPush = () => {
+        dispatch(setSlicePushSetId(id));
+    }
+
+    
 	return (
-		<Pressable style={[styles.container, isPush ? {borderColor: COLOR_ROOT_APP.LIME_70, borderWidth: 3} : null]} onPress={() => setIsPush(state => !state)} >
+		<Pressable 
+            style={[styles.container, isPush ? {borderColor: COLOR_ROOT_APP.LIME_70, borderWidth: 3} : null]} 
+            onPress={() => onPush()} 
+        >
             <View style={styles.rapBox} >
                 <Text style={styles.textRap} >{amount}</Text>
             </View>

@@ -14,7 +14,9 @@ interface IDay {
  * Карточка дня занятий.
  * @returns {JSX.Element}
  */
+//= Day 
 const Day: FC<IDay> = ({ day }) => {
+
 	const { navigate } = useNavigation<NavigationProp<TypeRootPage>>();
 
 	return (

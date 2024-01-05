@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../store/store';
 import { TDay } from '@/data/dataDays';
-import { IExercise } from '@/data/dataStartExercise';
+import { IExercise, TExercise } from '@/data/dataStartExercise';
 
 
 export interface ISlice {
@@ -19,7 +19,14 @@ export interface ISlice {
 }
 
 interface IChangeExercise extends Partial<IExercise> {
-    day: TDay; 
+    /**
+     * День в котором меняем упражнение.
+     */
+    day: TDay;
+    /**
+     * Упражнение которое меняем.
+     */
+    exercise: TExercise;
 }
 
 
@@ -55,11 +62,15 @@ const setsSlice = createSlice({
         },
         /**
          * Установка изминений в обьекте упражнения в массиве.
-         * - accept: Обьект {day: TDay(день в котором меняем упражнение), и ключ/значение которое меняем в упражнении}.
+         * - accept: Обьект {day: TDay; exercise: TExercise; и ключ/значение которое меняем в упражнении}.
          */
         setSliceChangeExerciseInArray: (state, actions: PayloadAction<IChangeExercise>) => {
             const exerciseNewArray = state.exerciseArray.map(item => {
-                if(item.day === actions.payload.day) {
+                if(item.day === actions.payload.day && item.exercise === actions.payload.exercise) {
+                    // Удаление значения при повторном нажатии кнопок верх/низ или вопрос.
+                    if('isUp' in actions.payload && item.isUp === actions.payload.isUp) {
+                        actions.payload.isUp = 'not';
+                    }
                     return {...item, ...actions.payload};
                 } else {
                     return item;
@@ -71,8 +82,13 @@ const setsSlice = createSlice({
          * Установка default state to setsSlice.
          */
         resetSetsSlice: (state) => {
+            
             state.exerciseArray = initialState.exerciseArray;
             state.pushSetId = initialState.pushSetId;
+        },
+        saveInDataBase: (state) => {
+            //console.log('STATE >>>', state.exerciseArray);
+            
         }
 
     },

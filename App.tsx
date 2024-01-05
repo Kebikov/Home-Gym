@@ -15,7 +15,7 @@ SplashScreen.preventAutoHideAsync();
 
 
 const App: FC = () => {
-
+    console.log('APP Connect!');
 	const [fontsLoaded] = useFonts({
 		'Sport': require('@/source/fonts/BebasNeue.ttf')
 	});

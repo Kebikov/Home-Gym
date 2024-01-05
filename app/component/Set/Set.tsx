@@ -1,11 +1,13 @@
 import { View, Text, StyleSheet, Pressable } from 'react-native';
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import { COLOR_ROOT_APP } from '@/data/colors';
 import COMMAND_SQL from '@/SQLite/CommandSQL/commandSQL';
+import { Audio } from 'expo-av';
 //* redux
 import { useAppSelector, useAppDispatch } from '@/redux/store/hooks';
 import { setSlicePushSetId } from '@/redux/slice/sets.slice';
 import { useDispatch } from 'react-redux';
+import { IExercise } from '@/data/dataStartExercise';
 
 interface ISet {
     /**
@@ -13,13 +15,9 @@ interface ISet {
      */
     amount: number;
     /**
-     * Титульный текст.
+     * Обьект упражнения.
      */
-    title: string;
-    /**
-     * Описание под титульным текстом.
-     */
-    descriptions: string;
+    exercise: IExercise;
     /**
      * Уникальное имя поля.
      * - Формируется как обшее название упражнения + номер по очередности.
@@ -39,9 +37,24 @@ interface ISet {
  * @returns {JSX.Element}
  */
 //= Set 
-const Set: FC<ISet> = ({amount, title, descriptions, id}) => {
+const Set: FC<ISet> = ({amount, exercise, id}) => {
 
+    /**
+     * Формирование уникального id для подхода в упражнении.
+     */
+    const createdId = exercise.day + exercise.exercise + id;
+
+    const [loadedSound, setLoadedSound] = useState<Audio.Sound>();
     const dispatch = useDispatch();
+    /**
+     * Функция для проигрывания звука.
+     */
+    const playSound = async () => {
+        const {sound} = await Audio.Sound.createAsync(require('@/source/audio/bip.mp3'));
+        setLoadedSound(loadedSound);
+        await sound.playAsync();
+    };
+    
     /**
      * Массив с нажатыми id.
      */
@@ -49,24 +62,35 @@ const Set: FC<ISet> = ({amount, title, descriptions, id}) => {
     /**
      * Переменная с результатом, есть ли совпадения в массиве с нажатыми id, нашего текушего id.
      */
-    const isPush: boolean = pushSetId.includes(id);
-
+    const isPush: boolean = pushSetId.includes(createdId);
+    /**
+     * Добавление id в массив нажатых кнопок.
+     */
     const onPush = () => {
-        dispatch(setSlicePushSetId(id));
+        dispatch(setSlicePushSetId(createdId));
     }
+
+    useEffect(() => {
+        return () => {
+            if(loadedSound) loadedSound.unloadAsync();
+        }
+    },[]);
 
     
 	return (
 		<Pressable 
             style={[styles.container, isPush ? {borderColor: COLOR_ROOT_APP.LIME_70, borderWidth: 3} : null]} 
-            onPress={() => onPush()} 
+            onPress={() => {
+                onPush();
+                playSound();
+            }} 
         >
             <View style={styles.rapBox} >
                 <Text style={styles.textRap} >{amount}</Text>
             </View>
             <View style={styles.descriptionsBox} >
-                <Text style={styles.textTitle} >{title}</Text>
-                <Text style={styles.textDescriptions} >{descriptions}</Text>
+                <Text style={styles.textTitle} >{id === 'burpee' ? 'Burpee' : exercise.title}</Text>
+                <Text style={styles.textDescriptions} >{id === 'burpee' ? 'с отжиманием и прыжком' : exercise.description}</Text>
             </View>
 		</Pressable>
 	);

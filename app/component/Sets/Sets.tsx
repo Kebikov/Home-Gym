@@ -52,13 +52,13 @@ const Sets: FC<ISets> = ({exercise}) => {
 
 	return (
 		<View style={styles.container} >
-			<Set amount={set[0]} title={exercise.title} descriptions={exercise.description} id={exercise.exercise + '-' + 0} />
-            <Set amount={set[1]} title={exercise.title} descriptions={exercise.description} id={exercise.exercise + '-' + 1} />
-            <Set amount={set[2]} title={exercise.title} descriptions={exercise.description} id={exercise.exercise + '-' + 2} />
+			<Set amount={set[0]} exercise={exercise} id={'0'} />
+            <Set amount={set[1]} exercise={exercise} id={'1'} />
+            <Set amount={set[2]} exercise={exercise} id={'2'} />
             {
                 exercise.burpee 
                 ?
-                <Set amount={exercise.burpee} title='Берпи.' descriptions='с отжиманием и прыжком' id={exercise.exercise + '-' + 3} />
+                <Set amount={exercise.burpee} exercise={exercise} id={'burpee'} />
                 :
                 null
             }

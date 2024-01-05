@@ -1,12 +1,12 @@
 import { View, StyleSheet, ImageBackground, ActivityIndicator } from 'react-native';
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useState, useCallback } from 'react';
 import { TScreenPropExerciseScreen } from '@/navigation/navigation.types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { IExercise } from '@/data/dataStartExercise';
 import { TExercise } from '@/data/dataStartExercise';
 //* redux
 import { useAppDispatch, useAppSelector } from '@/redux/store/hooks';
-import { setSliceExerciseArray } from '@/redux/slice/sets.slice';
+import { setSliceExerciseArray, resetSetsSlice } from '@/redux/slice/sets.slice';
 //* component
 import DateExercise from '@/component/DateExercise/DateExercise';
 import WeightExercise from '@/component/WeightExercise/WeightExercise';
@@ -28,6 +28,8 @@ export type TNumExercise = 0 | 1 | 2;
  */
 //: ExerciseScreen
 const ExerciseScreen: FC<TScreenPropExerciseScreen> = ({ route }) => {
+    console.log('1-----------------------------------------------------');
+    //const [isLoading, setIsLoading] = useState<boolean>(false);
 
 	const exerciseValue: Array<TExercise> = ['EXERCISE_1', 'EXERCISE_2', 'EXERCISE_3'];
 
@@ -35,6 +37,7 @@ const ExerciseScreen: FC<TScreenPropExerciseScreen> = ({ route }) => {
 	 * @param exerciseArray Массив с данными о упражнениях в данный день.
 	 */
 	const exerciseArray = useAppSelector(state => state.setsSlice.exerciseArray);
+    console.log('Slice >>> ', exerciseArray);
 	/**
 	 * Изминения состояния выбора упражнения.
 	 * @param selectExercise - Число которое используется для выбора упражнения из массива.
@@ -52,13 +55,23 @@ const ExerciseScreen: FC<TScreenPropExerciseScreen> = ({ route }) => {
      */
 	let exercise = exerciseArray.find(item => item.exercise === exerciseValue[selectExercise]);
 
+
 	useEffect(() => {
-		const getData = async () => {
-			const data: Array<IExercise> = await DBManagment.inset(`SELECT * FROM ${Configuration.TABLE_EXERCISE} WHERE day = "${dayExercise}"`);
+        console.log('123');
+        const getData = async () => {
+            const data: Array<IExercise> = await DBManagment.inset(`SELECT * FROM ${Configuration.TABLE_EXERCISE} WHERE day = "${dayExercise}"`);
             dispatch(setSliceExerciseArray(data));
-		};
-		getData();
+        };
+        getData();
+
+        return () => {
+            console.log('ИТОГ >>> ', exerciseArray);
+            dispatch(resetSetsSlice());
+        }
 	}, []);
+
+
+
 
     if (!exercise) {
         console.log('spiner',);
@@ -77,7 +90,7 @@ const ExerciseScreen: FC<TScreenPropExerciseScreen> = ({ route }) => {
             <ImageBackground source={exercise.img} style={styles.header}>
                 <DateExercise />
                 <WeightExercise exercise={exercise} />
-                <UpDownWeight valueIcon={exercise.isUp} />
+                <UpDownWeight exercise={exercise} />
             </ImageBackground>
             <Sets exercise={exercise} />
             <View style={{ flex: 1 }}></View>

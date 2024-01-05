@@ -5,6 +5,7 @@ import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { COLOR_ROOT_APP } from '@/data/colors';
 import * as SplashScreen from 'expo-splash-screen';
 import { deleteData, createData} from '@/helpers/firstLoadData';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 //* component
 import Navigation from '@/navigation/Navigation';
 import { Provider } from 'react-redux';
@@ -15,7 +16,7 @@ SplashScreen.preventAutoHideAsync();
 
 
 const App: FC = () => {
-    console.log('APP Connect!');
+
 	const [fontsLoaded] = useFonts({
 		'Sport': require('@/source/fonts/BebasNeue.ttf')
 	});
@@ -42,16 +43,18 @@ const App: FC = () => {
 		return null;
 	}
 
-	return (
-        <Provider store={store}>
-            <SafeAreaProvider>
-                <SafeAreaView style={{ flex: 1 }} onLayout={onLayoutRootView}>
-                    <Navigation />
-                    <StatusBar style='light' backgroundColor={COLOR_ROOT_APP.BACKGROUND} />
-                </SafeAreaView>
-            </SafeAreaProvider>
-        </Provider>
-	);
+    return (
+        <GestureHandlerRootView style={{flex: 1}}>
+            <Provider store={store}>
+                <SafeAreaProvider>
+                    <SafeAreaView style={{ flex: 1 }} onLayout={onLayoutRootView}>
+                        <Navigation />
+                        <StatusBar style='light' backgroundColor={COLOR_ROOT_APP.BACKGROUND} />
+                    </SafeAreaView>
+                </SafeAreaProvider>
+            </Provider>
+        </GestureHandlerRootView>
+    );
 };
 
 export default App;

@@ -20,7 +20,7 @@ export const deleteData = async (): Promise<boolean> => {
         await DBManagment.showAllTable();
         return true; 
     }catch (error) {
-        console.log('Error in Function  >>> ', error);
+        console.error('Error in Function  >>> ', error);
         return false;
     }
 };
@@ -60,7 +60,7 @@ export const createData = async (): Promise<boolean> => {
 
         return true;
     }catch (error) {
-        console.log('Error in Function  >>> ', error);
+        console.error('Error in Function  >>> ', error);
         return false;
     }
 };

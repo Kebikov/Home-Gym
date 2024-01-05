@@ -1,8 +1,9 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../store/store';
 import { TDay } from '@/data/dataDays';
 import { IExercise, TExercise } from '@/data/dataStartExercise';
+import { updateTableExercise } from '@/SQLite/DBManagment/updateTableExercise';
 
 
 export interface ISlice {
@@ -28,6 +29,33 @@ interface IChangeExercise extends Partial<IExercise> {
      */
     exercise: TExercise;
 }
+
+type TGetState = {
+    setsSlice: ISlice;
+}
+
+export const setSliceSaveInDataBase = createAsyncThunk(
+    'sets/setSliceSaveInDataBase',
+    async (_,{getState}) => {
+        const state = getState() as TGetState;
+
+        if('setsSlice' in state) {
+
+            if('exerciseArray' in state.setsSlice) {
+                state.setsSlice.exerciseArray.forEach(item => {
+                    if(item !== undefined) {
+                        const res = await updateTableExercise(item);
+                    
+                        console.log('RES >>> ', res);
+                    }
+                });
+
+            }
+
+        }
+        
+    }
+);
 
 
 //* initialState 
@@ -82,16 +110,20 @@ const setsSlice = createSlice({
          * Установка default state to setsSlice.
          */
         resetSetsSlice: (state) => {
-            
             state.exerciseArray = initialState.exerciseArray;
             state.pushSetId = initialState.pushSetId;
-        },
-        saveInDataBase: (state) => {
-            //console.log('STATE >>>', state.exerciseArray);
-            
         }
-
     },
+    extraReducers: (builder) => {
+        builder
+            .addCase(setSliceSaveInDataBase.fulfilled, (state, action) => {
+                console.log('fulfilled >>>', action.payload);
+            })
+            .addCase(setSliceSaveInDataBase.rejected, (state, action) => {
+                console.error('Error in setSliceSaveInDataBase');
+            })
+            .addDefaultCase(() => {});
+    }
 });
 
 

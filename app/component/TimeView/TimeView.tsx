@@ -73,7 +73,7 @@ const TimeView: FC<ITimerView> = ({ givenTime }) => {
             await sound.playAsync();
             Vibration.vibrate([7, 8, 10]);
         } catch(error) {
-            console.log('Error in funtion "playSound">>>', error);
+            console.error('Error in funtion "playSound">>>', error);
         }
     };
 

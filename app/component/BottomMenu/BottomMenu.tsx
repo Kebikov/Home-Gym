@@ -16,7 +16,7 @@ interface IBottomMenu {
 
 /**
  * @component
- * Навигация внизу экрана.
+ * Навигация вверху экрана.
  * @example <BottomMenu/>
  * @returns {JSX.Element}
  */

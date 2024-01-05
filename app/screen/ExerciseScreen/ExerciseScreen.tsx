@@ -2,11 +2,12 @@ import { View, StyleSheet, ImageBackground, ActivityIndicator } from 'react-nati
 import React, { FC, useEffect, useState, useCallback } from 'react';
 import { TScreenPropExerciseScreen } from '@/navigation/navigation.types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { IExercise } from '@/data/dataStartExercise';
-import { TExercise } from '@/data/dataStartExercise';
+import { IExercise, TExercise } from '@/data/dataStartExercise';
+import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 //* redux
 import { useAppDispatch, useAppSelector } from '@/redux/store/hooks';
 import { setSliceExerciseArray, resetSetsSlice } from '@/redux/slice/sets.slice';
+import { setSliceSaveInDataBase } from '@/redux/slice/sets.slice';
 //* component
 import DateExercise from '@/component/DateExercise/DateExercise';
 import WeightExercise from '@/component/WeightExercise/WeightExercise';
@@ -28,8 +29,6 @@ export type TNumExercise = 0 | 1 | 2;
  */
 //: ExerciseScreen
 const ExerciseScreen: FC<TScreenPropExerciseScreen> = ({ route }) => {
-    console.log('1-----------------------------------------------------');
-    //const [isLoading, setIsLoading] = useState<boolean>(false);
 
 	const exerciseValue: Array<TExercise> = ['EXERCISE_1', 'EXERCISE_2', 'EXERCISE_3'];
 
@@ -37,14 +36,14 @@ const ExerciseScreen: FC<TScreenPropExerciseScreen> = ({ route }) => {
 	 * @param exerciseArray Массив с данными о упражнениях в данный день.
 	 */
 	const exerciseArray = useAppSelector(state => state.setsSlice.exerciseArray);
-    console.log('Slice >>> ', exerciseArray);
+
 	/**
 	 * Изминения состояния выбора упражнения.
 	 * @param selectExercise - Число которое используется для выбора упражнения из массива.
 	 */
 	const [selectExercise, setSelectExercise] = useState<TNumExercise>(0);
     const dispatch = useAppDispatch();
-
+    console.log(selectExercise);
 	/**
 	 * День занятий который propse полученый при переходе, в формате "DAY_1" | "DAY_2" | ...
 	 */
@@ -56,8 +55,9 @@ const ExerciseScreen: FC<TScreenPropExerciseScreen> = ({ route }) => {
 	let exercise = exerciseArray.find(item => item.exercise === exerciseValue[selectExercise]);
 
 
+
+
 	useEffect(() => {
-        console.log('123');
         const getData = async () => {
             const data: Array<IExercise> = await DBManagment.inset(`SELECT * FROM ${Configuration.TABLE_EXERCISE} WHERE day = "${dayExercise}"`);
             dispatch(setSliceExerciseArray(data));
@@ -65,17 +65,37 @@ const ExerciseScreen: FC<TScreenPropExerciseScreen> = ({ route }) => {
         getData();
 
         return () => {
-            console.log('ИТОГ >>> ', exerciseArray);
-            dispatch(resetSetsSlice());
+            dispatch(setSliceSaveInDataBase());
+            //dispatch(resetSetsSlice());
         }
 	}, []);
 
 
+    // Обработка свайпов
+    const swipe = Gesture.Pan()
+        .onEnd((e) => {
+            if(e.translationX > 80) {
+                setSelectExercise(state => {
+                    if(state !== undefined && 0 <= state) {
+                        return (state - 1) as TNumExercise;
+                    } else {
+                        return state;
+                    }
+                });
+            }
+            if(e.translationX < -80) {
 
+                setSelectExercise(state => {
+                    if(state !== undefined && state < 2) {
+                        return (state + 1) as TNumExercise;
+                    } else {
+                        return state;
+                    }
+                });
+            }
+        });
 
     if (!exercise) {
-        console.log('spiner',);
-        // Показываем индикатор загрузки, пока данные загружаются
         return (
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                 <ActivityIndicator size='large' color='#0000ff' />
@@ -84,19 +104,21 @@ const ExerciseScreen: FC<TScreenPropExerciseScreen> = ({ route }) => {
     }
 
     
-	return (
-		<View style={styles.main}>
-            <BottomMenu setSelectExercise={setSelectExercise} />
-            <ImageBackground source={exercise.img} style={styles.header}>
-                <DateExercise />
-                <WeightExercise exercise={exercise} />
-                <UpDownWeight exercise={exercise} />
-            </ImageBackground>
-            <Sets exercise={exercise} />
-            <View style={{ flex: 1 }}></View>
-            <TimeView givenTime={10} />
-		</View>
-	);
+    return (
+        <GestureDetector gesture={swipe} >
+            <View style={styles.main}>
+                <BottomMenu setSelectExercise={setSelectExercise} />
+                <ImageBackground source={exercise.img} style={styles.header}>
+                    <DateExercise />
+                    <WeightExercise exercise={exercise} />
+                    <UpDownWeight exercise={exercise} />
+                </ImageBackground>
+                <Sets exercise={exercise} />
+                <View style={{ flex: 1 }}></View>
+                <TimeView givenTime={10} />
+            </View>
+        </GestureDetector>
+    );
 };
 
 const styles = StyleSheet.create({

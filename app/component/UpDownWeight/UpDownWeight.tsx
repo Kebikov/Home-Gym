@@ -23,7 +23,6 @@ const UpDownWeight: FC<IUpDownWeight> = ({exercise}) => {
      * Изминение состояния к кнопки верх/низ или вопрос.
      */
     const changeIsUp = (value: TIsUp) => {
-        console.log(value);
         dispatsh(setSliceChangeExerciseInArray({day: exercise.day, exercise: exercise.exercise, isUp: value}));
     }
 

@@ -1,14 +1,14 @@
 import { View, StyleSheet } from 'react-native';
 import React, { FC, useEffect, useState } from 'react';
-import { DATA_DAYS } from '@/data/dataDays';
 import Gradient from '@/component/Gradient/Gradient';
 import { IDataDays } from '@/data/dataDays';
 //* SQL
 import DBManagment from '@/SQLite/DBManagment';
-import COMMAND_SQL from '@/SQLite/CommandSQL/commandSQL';
 import Configuration from '@/SQLite/DBManagment/сonfiguration';
 //* component
 import Day from '@/component/Day/Day';
+//* redux
+import { useAppSelector } from '@/redux/store/hooks';
 
 
 //: DaysScreen
@@ -19,6 +19,11 @@ import Day from '@/component/Day/Day';
  * @returns {JSX.Element}
  */
 const DaysScreen: FC = () => {
+
+    const pushSetId = useAppSelector(state => state.setsSlice.pushSetId);
+    const exerciseArray = useAppSelector(state => state.setsSlice.exerciseArray);
+    console.log('ScreenDays >>> ', pushSetId);
+    console.log('ScreenDays >>> ', exerciseArray);
 
     /**
      * @param stateDays Массив с данными дней.

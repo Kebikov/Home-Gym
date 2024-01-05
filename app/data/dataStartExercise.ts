@@ -13,6 +13,10 @@ export type TIsUp = 'up' | 'down' | '?' | 'not';
  */
 export interface IExercise {
     /**
+     * id записи.
+     */
+    id?: number; 
+    /**
      * День занятия.
      */
     day: TDay;

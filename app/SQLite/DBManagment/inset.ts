@@ -10,7 +10,7 @@ import createDataBase from "./createDataBase";
  * @example await inset(command)
  * @returns Promise > Данные запроса.
  */
-export const inset = async (command: string) => {
+export const inset = (command: string):Promise<unknown> => {
     return new Promise((resolve, reject) => {
         checkExistenceDataBase()
             .then(isExistTable => {

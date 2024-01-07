@@ -10,7 +10,7 @@ import * as SQLite from 'expo-sqlite';
  * - Условие: сработает, если таблица пустая, в ней нет данных.
  * @example await addDataStartInTableExercise()
  */
-const addDataStartInTableExercise = async () => {
+const addDataStartInTableExercise = async (): Promise<void> => {
     /**
      * Команда для SQL по добавлению данных.
      */

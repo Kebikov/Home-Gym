@@ -1,5 +1,6 @@
 import { RouteProp } from "@react-navigation/native";
 import { TDay } from "@/data/dataDays";
+import { IExercise } from "@/data/dataStartExercise";
 
 export type TypeRootPage = {
 	DaysScreen: undefined;
@@ -9,10 +10,20 @@ export type TypeRootPage = {
          */
         day: TDay;
     };
+    EditWeight: {
+        /**
+         * Обьект занятия.
+         */
+        exercise: IExercise;
+    };
 };
 
 export type TScreenPropExerciseScreen = {
     route: RouteProp<TypeRootPage, 'ExerciseScreen'>
+};
+
+export type TScreenPropEditWeightScreen = {
+    route: RouteProp<TypeRootPage, 'EditWeight'>
 };
 
 

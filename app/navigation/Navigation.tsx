@@ -6,6 +6,7 @@ import { TypeRootPage } from './navigation.types';
 //* component
 import DaysScreen from '@/screen/DaysScreen/DaysScreen';
 import ExerciseScreen from '@/screen/ExerciseScreen/ExerciseScreen';
+import EditWeightScreen from '@/screen/EditWeightScreen/EditWeightScreen';
 
 const Stack  = createNativeStackNavigator<TypeRootPage>();
 
@@ -23,7 +24,7 @@ const Navigation: FC = () => {
             >   
                 <Stack.Screen name='DaysScreen' component={DaysScreen} />
                 <Stack.Screen name='ExerciseScreen' component={ExerciseScreen} options={{ animation: 'slide_from_right' }} />
-                
+                <Stack.Screen name='EditWeight' component={EditWeightScreen} />
             </Stack.Navigator>
         </NavigationContainer>
     );

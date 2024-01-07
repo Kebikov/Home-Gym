@@ -1,9 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit';
-import type { RootState } from '../store/store';
 import { TDay } from '@/data/dataDays';
 import { IExercise, TExercise } from '@/data/dataStartExercise';
-import { updateTableExercise } from '@/SQLite/DBManagment/updateTableExercise';
+import DBManagment from '@/SQLite/DBManagment';
 
 
 export interface ISlice {
@@ -38,22 +37,8 @@ export const setSliceSaveInDataBase = createAsyncThunk(
     'sets/setSliceSaveInDataBase',
     async (_,{getState}) => {
         const state = getState() as TGetState;
-
-        if('setsSlice' in state) {
-
-            if('exerciseArray' in state.setsSlice) {
-                state.setsSlice.exerciseArray.forEach(item => {
-                    if(item !== undefined) {
-                        const res = await updateTableExercise(item);
-                    
-                        console.log('RES >>> ', res);
-                    }
-                });
-
-            }
-
-        }
-        
+        const resalt = await DBManagment.updateTableExercise(state.setsSlice.exerciseArray);
+        return resalt;
     }
 );
 
@@ -117,7 +102,8 @@ const setsSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(setSliceSaveInDataBase.fulfilled, (state, action) => {
-                console.log('fulfilled >>>', action.payload);
+                state.exerciseArray = [];
+                state.pushSetId = [];
             })
             .addCase(setSliceSaveInDataBase.rejected, (state, action) => {
                 console.error('Error in setSliceSaveInDataBase');

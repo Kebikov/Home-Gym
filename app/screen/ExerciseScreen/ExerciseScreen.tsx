@@ -31,31 +31,24 @@ export type TNumExercise = 0 | 1 | 2;
 const ExerciseScreen: FC<TScreenPropExerciseScreen> = ({ route }) => {
 
 	const exerciseValue: Array<TExercise> = ['EXERCISE_1', 'EXERCISE_2', 'EXERCISE_3'];
-
 	/**
 	 * @param exerciseArray Массив с данными о упражнениях в данный день.
 	 */
 	const exerciseArray = useAppSelector(state => state.setsSlice.exerciseArray);
-
 	/**
 	 * Изминения состояния выбора упражнения.
 	 * @param selectExercise - Число которое используется для выбора упражнения из массива.
 	 */
 	const [selectExercise, setSelectExercise] = useState<TNumExercise>(0);
     const dispatch = useAppDispatch();
-    console.log(selectExercise);
 	/**
 	 * День занятий который propse полученый при переходе, в формате "DAY_1" | "DAY_2" | ...
 	 */
 	const dayExercise = route.params.day;
-
     /**
      * Обьект выбранного упрожнения.
      */
 	let exercise = exerciseArray.find(item => item.exercise === exerciseValue[selectExercise]);
-
-
-
 
 	useEffect(() => {
         const getData = async () => {
@@ -66,7 +59,6 @@ const ExerciseScreen: FC<TScreenPropExerciseScreen> = ({ route }) => {
 
         return () => {
             dispatch(setSliceSaveInDataBase());
-            //dispatch(resetSetsSlice());
         }
 	}, []);
 
@@ -76,7 +68,7 @@ const ExerciseScreen: FC<TScreenPropExerciseScreen> = ({ route }) => {
         .onEnd((e) => {
             if(e.translationX > 80) {
                 setSelectExercise(state => {
-                    if(state !== undefined && 0 <= state) {
+                    if(state !== undefined && 0 < state) {
                         return (state - 1) as TNumExercise;
                     } else {
                         return state;

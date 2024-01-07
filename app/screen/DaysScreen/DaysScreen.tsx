@@ -20,11 +20,6 @@ import { useAppSelector } from '@/redux/store/hooks';
  */
 const DaysScreen: FC = () => {
 
-    const pushSetId = useAppSelector(state => state.setsSlice.pushSetId);
-    const exerciseArray = useAppSelector(state => state.setsSlice.exerciseArray);
-    console.log('ScreenDays >>> ', pushSetId);
-    console.log('ScreenDays >>> ', exerciseArray);
-
     /**
      * @param stateDays Массив с данными дней.
      */

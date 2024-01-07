@@ -1,3 +1,4 @@
+import { IExercise } from './../data/dataStartExercise';
 import { IConfiguration } from "./DBManagment/сonfiguration";
 
 import Configuration from "./DBManagment/сonfiguration";
@@ -10,6 +11,7 @@ import deleteData from "./DBManagment/deleteData";
 import showAllTable from "./DBManagment/showAllTable";
 import addDataStartInTableDays from "./DBManagment/addDataStartInTableDays";
 import addDataStartInTableExercise from "./DBManagment/addDataStartInTableExercise";
+import { updateTableExercise } from "./DBManagment/updateTableExercise";
 
 interface IDBManagment {
     /**
@@ -52,7 +54,7 @@ interface IDBManagment {
      * Выполнение команд SQL.
      * @param command Команда выполнения SQL.
      * @example await inset(command)
-     * @returns Вывод в консоль результата выполнения или ошибки выполнения.
+     * @returns Promise > Данные запроса.
      */
     inset: Function;
     /**
@@ -83,7 +85,14 @@ interface IDBManagment {
      * - "Configuration.TABLE_EXERCISE".
      * @example await addDataStartInTableExercise()
      */
-    addDataStartInTableExercise: Function;
+    addDataStartInTableExercise: () => Promise<void>;
+    /**
+     * @function
+     * Сохранение в BD данных дня о упражнениях.
+     * @param dataArray Массив с обьектами упражнений.
+     * @returns {Promise<boolean>} true: добавление прошло без ошибок, false: c ошибками.
+     */
+    updateTableExercise: (dataArray: IExercise[]) => Promise<boolean>;
 }
 
 
@@ -97,7 +106,8 @@ const DBManagment: IDBManagment = {
     deleteData,
     showAllTable,
     addDataStartInTableDays,
-    addDataStartInTableExercise
+    addDataStartInTableExercise,
+    updateTableExercise
 }
 
 export default DBManagment;

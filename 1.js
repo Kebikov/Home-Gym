@@ -1,18 +1,19 @@
-const myJson = [
-    [
-        {
-            1: 'Вася1', 
-            age: 40, 
-            live: true}, 
-        {name: 'Вася2', age: 40, live: true}
-    ],
-    [
-        {name: 'Вася3', age: 40, live: true},
-        {name: 'Вася4', age: 40, live: true}
-    ]
-]
+const dog = () => {
+    return new Promise(resolve => {
+        setTimeout(() => {
+            console.log('time',);
+            resolve(true);
+        }, 1000);
+    });
+}
 
 
+async function check() {
+    const resalt = dog();
+    console.log('',resalt);
+}
 
-console.log(myJson[0][0][1]);
+check();
+
+
 

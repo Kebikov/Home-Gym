@@ -1,9 +1,11 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
 import React, { FC } from 'react';
 import { COLOR_ROOT_APP } from '@/data/colors';
 import { IExercise } from '@/data/dataStartExercise';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
 //* helpers
 import calculationTotalWeight from '@/helpers/calculationTotalWeight';
+import { TypeRootPage } from '@/navigation/navigation.types';
 
 interface IWeightExercise {
     /**
@@ -21,6 +23,8 @@ interface IWeightExercise {
  * @returns {JSX.Element}
  */
 const WeightExercise: FC<IWeightExercise> = ({exercise}) => {
+
+    const {navigate} = useNavigation<NavigationProp<TypeRootPage>>();
 
     /**
      * Вес первой стороны блинов грифа.
@@ -60,9 +64,12 @@ const WeightExercise: FC<IWeightExercise> = ({exercise}) => {
 
 	return (
         <View style={styles.main} >
-            <View style={[styles.left, styles.publicBox]} >
+            <Pressable 
+                style={[styles.left, styles.publicBox]} 
+                onPress={() => navigate('EditWeight', {exercise})}
+            >
                 <Text style={styles.textKg} >{exercise.weightOne}</Text>
-            </View>
+            </Pressable>
 
             <View style={[styles.center, styles.publicBox]} >
                 <Text style={styles.textWeight} >{weightTotal}</Text>
@@ -70,7 +77,7 @@ const WeightExercise: FC<IWeightExercise> = ({exercise}) => {
             </View>
 
             <View style={[styles.right, styles.publicBox]} >
-                <Text style={styles.textKg} >{exercise.weightTwo === '-' ? 'THE SOME' : exercise.weightTwo}</Text>
+                <Text style={styles.textKg} >{exercise.weightTwo === '-' ? 'SIMILAR' : exercise.weightTwo}</Text>
             </View>
         </View>
 	);

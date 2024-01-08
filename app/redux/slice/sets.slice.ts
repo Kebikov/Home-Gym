@@ -3,9 +3,22 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import { TDay } from '@/data/dataDays';
 import { IExercise, TExercise } from '@/data/dataStartExercise';
 import DBManagment from '@/SQLite/DBManagment';
+import { RootState } from '../store/store';
+import updateTableDays from '@/SQLite/DBManagment/updateTableDays';
+import { IUpdateTableDays } from '@/SQLite/DBManagment/updateTableDays';
+import getCurrentDateInFormatArray from '@/helpers/getCurrentDateInFormatArray';
 
 
 export interface ISlice {
+    /**
+     * Для отслеживания состояния обновления в БД, при изминении меняем на противоположное.
+     * Что будет говорить о том, что необимо загрузить обновленные данные из БД.
+     */
+    isUpdateToggle: boolean;
+    /**
+     * Id текушего дня тренировки.
+     */
+    currentDaysId: number | undefined;
     /**
      * Массив с обьектами занятий.
      */
@@ -27,24 +40,36 @@ interface IChangeExercise extends Partial<IExercise> {
      * Упражнение которое меняем.
      */
     exercise: TExercise;
-}
 
-type TGetState = {
-    setsSlice: ISlice;
 }
 
 export const setSliceSaveInDataBase = createAsyncThunk(
     'sets/setSliceSaveInDataBase',
     async (_,{getState}) => {
-        const state = getState() as TGetState;
-        const resalt = await DBManagment.updateTableExercise(state.setsSlice.exerciseArray);
-        return resalt;
+        const state = getState() as RootState;
+        const resaltUpdateTabelExercise = await DBManagment.updateTableExercise(state.setsSlice.exerciseArray);
+        console.log('resaltUpdateTabelExercise >>> ',resaltUpdateTabelExercise);
+        if(state.setsSlice.pushSetId.length === 0) return resaltUpdateTabelExercise;
+
+        const dateArray = getCurrentDateInFormatArray();
+
+        const dataForUpdateTableDays: IUpdateTableDays = {
+            id: state.setsSlice.currentDaysId,
+            date: `${dateArray[2]}.${dateArray[1]}.${dateArray[0]}`,
+            lastExercise: 1
+        }
+
+        const resaltUpdateTabelDays = await updateTableDays(dataForUpdateTableDays);
+        console.log('resaltUpdateTabelDays >>> ', resaltUpdateTabelDays);
+        return resaltUpdateTabelDays;
     }
 );
 
 
 //* initialState 
 const initialState: ISlice = {
+    isUpdateToggle: false,
+    currentDaysId: undefined,
     exerciseArray: [],
     pushSetId: []
 }
@@ -78,6 +103,7 @@ const setsSlice = createSlice({
          * - accept: Обьект {day: TDay; exercise: TExercise; и ключ/значение которое меняем в упражнении}.
          */
         setSliceChangeExerciseInArray: (state, actions: PayloadAction<IChangeExercise>) => {
+            console.log(actions.payload);
             const exerciseNewArray = state.exerciseArray.map(item => {
                 if(item.day === actions.payload.day && item.exercise === actions.payload.exercise) {
                     // Удаление значения при повторном нажатии кнопок верх/низ или вопрос.
@@ -92,9 +118,16 @@ const setsSlice = createSlice({
             state.exerciseArray = exerciseNewArray;
         },
         /**
+         * Установка id текушего дня тренировки.
+         */
+        setSliceCurrentDaysId: (state, actions) => {
+            state.currentDaysId = actions.payload;
+        },
+        /**
          * Установка default state to setsSlice.
          */
         resetSetsSlice: (state) => {
+            state.currentDaysId = undefined;
             state.exerciseArray = initialState.exerciseArray;
             state.pushSetId = initialState.pushSetId;
         }
@@ -102,8 +135,12 @@ const setsSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(setSliceSaveInDataBase.fulfilled, (state, action) => {
+                state.currentDaysId = undefined;
                 state.exerciseArray = [];
-                state.pushSetId = [];
+                if(state.pushSetId.length !== 0) {
+                    state.pushSetId = [];
+                    state.isUpdateToggle = !state.isUpdateToggle;
+                }
             })
             .addCase(setSliceSaveInDataBase.rejected, (state, action) => {
                 console.error('Error in setSliceSaveInDataBase');
@@ -119,5 +156,6 @@ export const {
     setSlicePushSetId,
     setSliceExerciseArray,
     setSliceChangeExerciseInArray,
+    setSliceCurrentDaysId,
     resetSetsSlice
 } = setsSlice.actions;

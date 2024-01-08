@@ -2,6 +2,7 @@ import { View, StyleSheet } from 'react-native';
 import React, { FC, useEffect, useState } from 'react';
 import Gradient from '@/component/Gradient/Gradient';
 import { IDataDays } from '@/data/dataDays';
+import { useFocusEffect } from '@react-navigation/native';
 //* SQL
 import DBManagment from '@/SQLite/DBManagment';
 import Configuration from '@/SQLite/DBManagment/сonfiguration';
@@ -19,25 +20,30 @@ import { useAppSelector } from '@/redux/store/hooks';
  * @returns {JSX.Element}
  */
 const DaysScreen: FC = () => {
-
+    console.log('------------------------------------------------------');
     /**
      * @param stateDays Массив с данными дней.
      */
     const [stateDays, setStateDays] = useState<Array<IDataDays> | []>([]);
-
+    console.log(stateDays);
+    const isUpdateToggle = useAppSelector(state => state.setsSlice.isUpdateToggle);
     /**
      * Массив элементов карточек с днями тренировак.
      */
     const days: JSX.Element[] = stateDays.map((item, i) => <Day day={item} key={i}/>);
 
-    useEffect(() => {
-        async function getData() {
-            const data: Array<IDataDays> | [] = await DBManagment.inset(`SELECT * FROM ${Configuration.TABLE__DAYS}`); 
-            if(data.length !== 0) setStateDays(data);
-        }
+useEffect(() => {
+    console.log('DaYS !');
+    async function getData() {
+        const data: Array<IDataDays> | [] = await DBManagment.inset(`SELECT * FROM ${Configuration.TABLE__DAYS}`); 
+        if(data.length !== 0) setStateDays(data);
+    }
 
-        getData();
-    },[]);
+    getData();
+    return () => {
+        console.log('Размонтирован !');
+    }
+},[isUpdateToggle]);
 
 
 	return (

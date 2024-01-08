@@ -51,6 +51,7 @@ const ExerciseScreen: FC<TScreenPropExerciseScreen> = ({ route }) => {
 	let exercise = exerciseArray.find(item => item.exercise === exerciseValue[selectExercise]);
 
 	useEffect(() => {
+        console.log('Упражнение !');
         const getData = async () => {
             const data: Array<IExercise> = await DBManagment.inset(`SELECT * FROM ${Configuration.TABLE_EXERCISE} WHERE day = "${dayExercise}"`);
             dispatch(setSliceExerciseArray(data));
@@ -58,6 +59,7 @@ const ExerciseScreen: FC<TScreenPropExerciseScreen> = ({ route }) => {
         getData();
 
         return () => {
+            console.log('Размонтирован Упражнения !');
             dispatch(setSliceSaveInDataBase());
         }
 	}, []);
@@ -107,7 +109,7 @@ const ExerciseScreen: FC<TScreenPropExerciseScreen> = ({ route }) => {
                 </ImageBackground>
                 <Sets exercise={exercise} />
                 <View style={{ flex: 1 }}></View>
-                <TimeView givenTime={10} />
+                <TimeView givenTime={150} />
             </View>
         </GestureDetector>
     );

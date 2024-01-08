@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet } from 'react-native';
 import React, { FC } from 'react';
 import { COLOR_ROOT_APP } from '@/data/colors';
+import getCurrentDateInFormatArray from '@/helpers/getCurrentDateInFormatArray';
 
 /**
  * @component
@@ -11,19 +12,7 @@ import { COLOR_ROOT_APP } from '@/data/colors';
  */
 const DateExercise: FC = () => {
 
-    /**
-     * Текушяя дата строкой.
-     */
-    const date: string = new Date().toISOString();
-    /**
-     * Массив из строки разспличеный по "Т".
-     */
-    const arraySplitT: string[] = date.split('T');
-    /**
-     * Массив из строки разспличеный по "-".
-     * - Получим в формате: ["2023", "12", "28"].
-     */
-    const arraySplitMinus: string[] = arraySplitT[0].split('-');
+    const arraySplitMinus: string[] = getCurrentDateInFormatArray();
 
 
 	return (

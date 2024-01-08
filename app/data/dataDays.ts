@@ -6,7 +6,12 @@ export type TDay = 'DAY_1' | 'DAY_2' | 'DAY_3' | 'DAY_4' | 'DAY_5';
  */
 export interface IDataDays {
     /**
-     * День занятий, в формате "DAY_1" | "DAY_2"  | ...
+     * Id текушей записи в таблице.
+     */
+    id?: number;
+    /**
+     * День занятий.
+     * @example "DAY_1" | "DAY_2"  | ...
      */
     day: TDay;
     /**
@@ -15,6 +20,7 @@ export interface IDataDays {
     img: number;
     /**
      * Дата последнего занятия по данной программе.
+     * @example "23.12.2023"
      */
     date: string;
     /**
@@ -26,9 +32,10 @@ export interface IDataDays {
      */
     description: string;
     /**
-     * Отметка последнего дня занятий, по которому занимался.
+     * Последний ли это день по которому занимался.
+     * @example 0-false, 1-true
      */
-    lastExercise: boolean;
+    lastExercise: number;
 }
 
 /**
@@ -41,7 +48,7 @@ export const DATA_DAYS: Array<IDataDays> = [
         date: '2023-12-23',
         title: 'Day One',
         description: 'Битепс / Ноги / Грудь',
-        lastExercise: false
+        lastExercise: 0
     },
     {
         day: 'DAY_2',
@@ -49,7 +56,7 @@ export const DATA_DAYS: Array<IDataDays> = [
         date: '23.12.2023',
         title: 'Day Two',
         description: 'Грудь / Битепс / Плечи',
-        lastExercise: false
+        lastExercise: 0
     },
     {
         day: 'DAY_3',
@@ -57,7 +64,7 @@ export const DATA_DAYS: Array<IDataDays> = [
         date: '23.12.2023',
         title: 'Day Three',
         description: 'Битепс / Грудь / Ноги',
-        lastExercise: false
+        lastExercise: 0
     },
     {
         day: 'DAY_4',
@@ -65,7 +72,7 @@ export const DATA_DAYS: Array<IDataDays> = [
         date: '23.12.2023',
         title: 'Day Four',
         description: 'Плечи / Грудь / Битепс',
-        lastExercise: false
+        lastExercise: 1
     },
     {
         day: 'DAY_5',
@@ -73,6 +80,6 @@ export const DATA_DAYS: Array<IDataDays> = [
         date: '23.12.2023',
         title: 'Day Five',
         description: 'Грудь / Плечи / Спина',
-        lastExercise: false
+        lastExercise: 0
     }
 ];

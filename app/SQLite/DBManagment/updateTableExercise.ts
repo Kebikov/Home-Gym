@@ -35,7 +35,6 @@ export const updateTableExercise = (dataArray: IExercise[]): Promise<boolean> =>
             `;
 
             const command = commandStart + commandData;
-
             await inset(command);
         })
     )

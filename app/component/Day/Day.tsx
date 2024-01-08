@@ -3,7 +3,9 @@ import React, { FC } from 'react';
 import { COLOR_ROOT_APP } from '@/data/colors';
 import { IDataDays } from '@/data/dataDays';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { TScreenPropExerciseScreen, TypeRootPage } from '@/navigation/navigation.types';
+import { TypeRootPage } from '@/navigation/navigation.types';
+import { useAppDispatch } from '@/redux/store/hooks';
+import { setSliceCurrentDaysId } from '@/redux/slice/sets.slice';
 
 interface IDay {
 	day: IDataDays;
@@ -17,11 +19,14 @@ interface IDay {
 //= Day 
 const Day: FC<IDay> = ({ day }) => {
 
+    const dispatch = useAppDispatch();
+
 	const { navigate } = useNavigation<NavigationProp<TypeRootPage>>();
 
 	return (
 		<Pressable
 			onPress={() => {
+                dispatch(setSliceCurrentDaysId(day.id));
 				navigate('ExerciseScreen', { day: day.day});
 			}}
 			style={style.main}

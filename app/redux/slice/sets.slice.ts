@@ -9,12 +9,29 @@ import { IUpdateTableDays } from '@/SQLite/DBManagment/updateTableDays';
 import getCurrentDateInFormatArray from '@/helpers/getCurrentDateInFormatArray';
 
 
+
+/**
+ * Функция для сплита id по "#".
+ * @param stringId Id стокой: "DAY_1#EXERCISE_1#0"
+ * @example splitID("DAY_1#EXERCISE_1#0") 
+ * @returns "EXERCISE_1"
+ */
+function splitID(stringId: string): string {
+    const splitId: string[] = stringId.split('#'); 
+    const exercise = splitId[1];
+    return exercise;
+}
+
 export interface ISlice {
     /**
      * Для отслеживания состояния обновления в БД, при изминении меняем на противоположное.
      * Что будет говорить о том, что необимо загрузить обновленные данные из БД.
      */
     isUpdateToggle: boolean;
+    /**
+     * Состояние вкл./выкл. таймера.
+     */
+    isStartTimer: boolean;
     /**
      * Id текушего дня тренировки.
      */
@@ -48,7 +65,6 @@ export const setSliceSaveInDataBase = createAsyncThunk(
     async (_,{getState}) => {
         const state = getState() as RootState;
         const resaltUpdateTabelExercise = await DBManagment.updateTableExercise(state.setsSlice.exerciseArray);
-        console.log('resaltUpdateTabelExercise >>> ',resaltUpdateTabelExercise);
         if(state.setsSlice.pushSetId.length === 0) return resaltUpdateTabelExercise;
 
         const dateArray = getCurrentDateInFormatArray();
@@ -60,7 +76,6 @@ export const setSliceSaveInDataBase = createAsyncThunk(
         }
 
         const resaltUpdateTabelDays = await updateTableDays(dataForUpdateTableDays);
-        console.log('resaltUpdateTabelDays >>> ', resaltUpdateTabelDays);
         return resaltUpdateTabelDays;
     }
 );
@@ -69,6 +84,7 @@ export const setSliceSaveInDataBase = createAsyncThunk(
 //* initialState 
 const initialState: ISlice = {
     isUpdateToggle: false,
+    isStartTimer: false,
     currentDaysId: undefined,
     exerciseArray: [],
     pushSetId: []
@@ -86,6 +102,21 @@ const setsSlice = createSlice({
             const index = state.pushSetId.indexOf(actions.payload);
             if(index === -1) {
                 state.pushSetId.push(actions.payload);
+                // Начало кода по увеличению количества выполненных раз упражнения.
+                const madeExercisesArray: string[] = state.pushSetId.filter(item => splitID(item) === splitID(actions.payload));
+                const madeExercisesArrayTotalElement: number = madeExercisesArray.length;
+                // Если было три подхода, то увеличиваем количества выполненных упражнений.
+                if(madeExercisesArrayTotalElement === 3) {
+                    const newExerciseArray = state.exerciseArray.map(exercise => {
+                        if(exercise.exercise === splitID(actions.payload)) {
+                            exercise.amountExercise ++;
+                            return exercise;
+                        } else {
+                            return exercise;
+                        }
+                    });
+                    state.exerciseArray = newExerciseArray;
+                }
             } else {
                 state.pushSetId.splice(index, 1);
             }
@@ -103,7 +134,6 @@ const setsSlice = createSlice({
          * - accept: Обьект {day: TDay; exercise: TExercise; и ключ/значение которое меняем в упражнении}.
          */
         setSliceChangeExerciseInArray: (state, actions: PayloadAction<IChangeExercise>) => {
-            console.log(actions.payload);
             const exerciseNewArray = state.exerciseArray.map(item => {
                 if(item.day === actions.payload.day && item.exercise === actions.payload.exercise) {
                     // Удаление значения при повторном нажатии кнопок верх/низ или вопрос.
@@ -122,6 +152,9 @@ const setsSlice = createSlice({
          */
         setSliceCurrentDaysId: (state, actions) => {
             state.currentDaysId = actions.payload;
+        },
+        setSliceIsStartTimer: (state, actions) => {
+            state.isStartTimer = actions.payload;
         },
         /**
          * Установка default state to setsSlice.
@@ -157,5 +190,6 @@ export const {
     setSliceExerciseArray,
     setSliceChangeExerciseInArray,
     setSliceCurrentDaysId,
+    setSliceIsStartTimer,
     resetSetsSlice
 } = setsSlice.actions;

@@ -247,10 +247,10 @@ export const DATA_START_EXERCISE: Array<IExercise> = [
         title: 'Грудь, свидение гантелей.',
         description: 'нетральное положение скамьи',
         weightNeck: '1.6',
-        weightOne: '4+3+2',
-        weightTwo: '-',
+        weightOne: '4+3+2+1',
+        weightTwo: '4+3+2+0',
         amount: 12,
-        amountExercise: 4,
+        amountExercise: 0,
         isUp: 'up',
         img: require('@/source/img/days/day-5/1.jpg'),
         burpee: 18
@@ -266,7 +266,7 @@ export const DATA_START_EXERCISE: Array<IExercise> = [
         amount: 12,
         amountExercise: 1,
         isUp: 'not',
-        img: require('@/source/img/days/day-4/2.jpg'),
+        img: require('@/source/img/days/day-5/2.jpg'),
         burpee: 16
     },
     {

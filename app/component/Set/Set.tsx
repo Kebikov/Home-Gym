@@ -5,7 +5,7 @@ import COMMAND_SQL from '@/SQLite/CommandSQL/commandSQL';
 import { Audio } from 'expo-av';
 //* redux
 import { useAppSelector, useAppDispatch } from '@/redux/store/hooks';
-import { setSlicePushSetId } from '@/redux/slice/sets.slice';
+import { setSlicePushSetId, setSliceIsStartTimer } from '@/redux/slice/sets.slice';
 import { useDispatch } from 'react-redux';
 import { IExercise } from '@/data/dataStartExercise';
 
@@ -41,8 +41,9 @@ const Set: FC<ISet> = ({amount, exercise, id}) => {
 
     /**
      * Формирование уникального id для подхода в упражнении.
+     * @example "DAY_1#EXERCISE_1#0"
      */
-    const createdId = exercise.day + exercise.exercise + id;
+    const createdId:string = exercise.day + '#' + exercise.exercise + '#' + id;
 
     const [loadedSound, setLoadedSound] = useState<Audio.Sound>();
     const dispatch = useDispatch();
@@ -68,6 +69,7 @@ const Set: FC<ISet> = ({amount, exercise, id}) => {
      */
     const onPush = () => {
         dispatch(setSlicePushSetId(createdId));
+        dispatch(setSliceIsStartTimer(true));
     }
 
     useEffect(() => {
@@ -78,7 +80,7 @@ const Set: FC<ISet> = ({amount, exercise, id}) => {
 
     
 	return (
-		<Pressable 
+		<Pressable
             style={[styles.container, isPush ? {borderColor: COLOR_ROOT_APP.LIME_70, borderWidth: 3} : null]} 
             onPress={() => {
                 onPush();
@@ -140,3 +142,5 @@ const styles = StyleSheet.create({
 });
 
 export default Set;
+
+

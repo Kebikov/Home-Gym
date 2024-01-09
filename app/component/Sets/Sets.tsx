@@ -29,7 +29,10 @@ const Sets: FC<ISets> = ({exercise}) => {
      */
     const amount = exercise.amount;
 
-    // Добавление количества подходов от меньшего к большему. Пример: [10, 11, 12].
+    /**
+     * Добавление количества подходов от меньшего к большему. 
+     * @example [10, 11, 12]
+     */
     switch(amount) {
         case 12:
             set.push(amount - 2);

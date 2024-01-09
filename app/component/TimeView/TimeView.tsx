@@ -7,6 +7,9 @@ import { COLOR_ROOT_APP } from '@/data/colors';
 import { Audio, AVPlaybackSource } from 'expo-av';
 import {soundAudio} from '@/data/soundAudio';
 import { Vibration } from 'react-native';
+//* redux 
+import { useAppDispatch, useAppSelector } from '@/redux/store/hooks';
+import { setSliceIsStartTimer } from '@/redux/slice/sets.slice';
 
 
 interface ITimerView {
@@ -24,6 +27,8 @@ interface ITimerView {
  * @returns {JSX.Element}
  */
 const TimeView: FC<ITimerView> = ({ givenTime }) => {
+
+    const dispatch = useAppDispatch();
 	/**
 	 * @param balanceTime - Остаток времени работы таймера в секундах.
 	 */
@@ -33,9 +38,9 @@ const TimeView: FC<ITimerView> = ({ givenTime }) => {
 	 */
 	const [positionProgressInCircle, setPositionProgressInCircle] = useState<number>(0);
 	/**
-	 * @param isStartTimer - Флаг включения/выключения таймера.
+	 * Флаг включения/выключения таймера.
 	 */
-	const [isStartTimer, setIsStartTimer] = useState<boolean>(false);
+    const isStartTimer = useAppSelector(state => state.setsSlice.isStartTimer);
     /**
      * @param saundPlay Воспроизводимый обьект звука.
      */
@@ -47,7 +52,8 @@ const TimeView: FC<ITimerView> = ({ givenTime }) => {
 	/**
 	 * Размер толшины обводки круга.
 	 */
-	const strokeWidth: number = 8;
+	const strokeWidth: number = 12;
+    const strokeWidthColor = 10;
 	/**
 	 * Координаты цента круга.
 	 */
@@ -77,6 +83,18 @@ const TimeView: FC<ITimerView> = ({ givenTime }) => {
         }
     };
 
+    const stopSound = async () => {
+        try {
+            if(soundPlay) {
+                await soundPlay.stopAsync();
+            }
+        } catch(error) {
+            console.error('Error in funtion "stopSound" >>> ', error);
+        }
+    }
+
+
+
     useEffect(() => {
         /**
          * Обьект таймера.
@@ -88,7 +106,6 @@ const TimeView: FC<ITimerView> = ({ givenTime }) => {
                 setBalanceTime(balanceTime => {
                     if (balanceTime === 0) {
                         clearTimeout(timer);
-                        playSound(soundAudio.end);
                         return givenTime;
                     } else {
                         setPositionProgressInCircle(positionProgressInCircle => positionProgressInCircle + 1);
@@ -96,7 +113,7 @@ const TimeView: FC<ITimerView> = ({ givenTime }) => {
                         return balanceTime - 1;
                     }
                 });
-                // setPositionProgressInCircle(positionProgressInCircle => positionProgressInCircle + 1);
+                
             }, 1000);
         } else {
             clearTimeout(timer);
@@ -110,13 +127,21 @@ const TimeView: FC<ITimerView> = ({ givenTime }) => {
         };
     }, [isStartTimer]);
 
+    useEffect(() => {
+        if(balanceTime === 0) {
+            playSound(soundAudio.end);
+            dispatch(setSliceIsStartTimer(false));
+            setPositionProgressInCircle(0);
+        }
+    },[balanceTime]);
+
 	return (
 		<View style={[styles.container, { height: size }]}>
 			<Pressable 
                 style={styles.containerBox} 
                 onPressIn={() => {
                         playSound(soundAudio.play);
-                        setIsStartTimer(true);
+                        dispatch(setSliceIsStartTimer(true));
                     }
                 }
             >
@@ -125,9 +150,9 @@ const TimeView: FC<ITimerView> = ({ givenTime }) => {
 
 			<Svg width={size} height={size}>
 				<G rotation={'-90'} origin={center}>
-					<Circle stroke={COLOR_ROOT_APP.LIGHT_GREY} cx={center} cy={center} r={radius} fill={'transparent'} strokeWidth={strokeWidth} />
+					<Circle stroke={COLOR_ROOT_APP.LIGHT_GREY} cx={center} cy={center} r={radius} fill={'transparent'} strokeWidth={strokeWidthColor} />
 					<Circle
-						stroke={COLOR_ROOT_APP.YELLOW}
+						stroke={COLOR_ROOT_APP.BACKGROUND}
 						cx={center}
 						cy={center}
 						r={radius}
@@ -135,18 +160,19 @@ const TimeView: FC<ITimerView> = ({ givenTime }) => {
 						strokeWidth={strokeWidth}
 						strokeDasharray={circumference}
 						strokeDashoffset={circumference - (circumference * positionProgressInCircle * step) / 100}
-						strokeLinecap='round'
+						//strokeLinecap='round'
 					/>
 				</G>
 				<Text style={[styles.text, styles.absoluteCenter]}>{transferSecInTime(balanceTime)}</Text>
 			</Svg>
 
-            <Pressable
+            <Pressable 
                 style={styles.containerBox}
                 onPressIn={() => {
+                    stopSound();
                     playSound(soundAudio.play);
                     setPositionProgressInCircle(0);
-                    setIsStartTimer(false);
+                    dispatch(setSliceIsStartTimer(false));
                 }}
             >
                 <Text style={styles.text}>STOP</Text>

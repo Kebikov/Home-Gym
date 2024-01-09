@@ -1,11 +1,14 @@
 import { View, Text, StyleSheet, Pressable } from 'react-native';
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { COLOR_ROOT_APP } from '@/data/colors';
 import { IExercise } from '@/data/dataStartExercise';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
+
 //* helpers
 import calculationTotalWeight from '@/helpers/calculationTotalWeight';
 import { TypeRootPage } from '@/navigation/navigation.types';
+//* component
+import ModalForAmountExercise from '../ModalForAmountExercise/ModalForAmountExercise';
 
 interface IWeightExercise {
     /**
@@ -24,7 +27,9 @@ interface IWeightExercise {
  */
 const WeightExercise: FC<IWeightExercise> = ({exercise}) => {
 
+    const [modalVisible, setModalVisible] = useState<boolean>(false);
     const {navigate} = useNavigation<NavigationProp<TypeRootPage>>();
+
 
     /**
      * Вес первой стороны блинов грифа.
@@ -63,23 +68,26 @@ const WeightExercise: FC<IWeightExercise> = ({exercise}) => {
 
 
 	return (
-        <View style={styles.main} >
-            <Pressable 
-                style={[styles.left, styles.publicBox]} 
-                onPress={() => navigate('EditWeight', {exercise})}
-            >
-                <Text style={styles.textKg} >{exercise.weightOne}</Text>
-            </Pressable>
+        <>
+            <ModalForAmountExercise modalVisible={modalVisible} setModalVisible={setModalVisible} exercise={exercise} />
+            <View style={styles.main} >
+                <Pressable 
+                    style={[styles.left, styles.publicBox]} 
+                    onPress={() => navigate('EditWeight', {exercise})}
+                >
+                    <Text style={styles.textKg} >{exercise.weightOne}</Text>
+                </Pressable>
 
-            <View style={[styles.center, styles.publicBox]} >
-                <Text style={styles.textWeight} >{weightTotal}</Text>
-                <Text style={styles.textKg} >{`KG / ${exercise.amountExercise}`}</Text>
-            </View>
+                <Pressable style={[styles.center, styles.publicBox]} onPress={() => setModalVisible(!modalVisible)} >
+                    <Text style={styles.textWeight} >{weightTotal}</Text>
+                    <Text style={styles.textKg} >{`KG / ${exercise.amountExercise}`}</Text>
+                </Pressable>
 
-            <View style={[styles.right, styles.publicBox]} >
-                <Text style={styles.textKg} >{exercise.weightTwo === '-' ? 'SIMILAR' : exercise.weightTwo}</Text>
+                <View style={[styles.right, styles.publicBox]} >
+                    <Text style={styles.textKg} >{exercise.weightTwo === '-' ? 'SIMILAR' : exercise.weightTwo}</Text>
+                </View>
             </View>
-        </View>
+        </>
 	);
 };
 

@@ -1,12 +1,11 @@
 import { View, StyleSheet, ImageBackground, ActivityIndicator } from 'react-native';
-import React, { FC, useEffect, useState, useCallback } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { TScreenPropExerciseScreen } from '@/navigation/navigation.types';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { IExercise, TExercise } from '@/data/dataStartExercise';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 //* redux
 import { useAppDispatch, useAppSelector } from '@/redux/store/hooks';
-import { setSliceExerciseArray, resetSetsSlice } from '@/redux/slice/sets.slice';
+import { setSliceExerciseArray } from '@/redux/slice/sets.slice';
 import { setSliceSaveInDataBase } from '@/redux/slice/sets.slice';
 //* component
 import DateExercise from '@/component/DateExercise/DateExercise';
@@ -15,6 +14,7 @@ import UpDownWeight from '@/component/UpDownWeight/UpDownWeight';
 import TimeView from '@/component/TimeView/TimeView';
 import Sets from '@/component/Sets/Sets';
 import BottomMenu from '@/component/BottomMenu/BottomMenu';
+import ModalForAmountExercise from '@/component/ModalForAmountExercise/ModalForAmountExercise';
 //* SQL
 import DBManagment from '@/SQLite/DBManagment';
 import Configuration from '@/SQLite/DBManagment/сonfiguration';
@@ -51,7 +51,6 @@ const ExerciseScreen: FC<TScreenPropExerciseScreen> = ({ route }) => {
 	let exercise = exerciseArray.find(item => item.exercise === exerciseValue[selectExercise]);
 
 	useEffect(() => {
-        console.log('Упражнение !');
         const getData = async () => {
             const data: Array<IExercise> = await DBManagment.inset(`SELECT * FROM ${Configuration.TABLE_EXERCISE} WHERE day = "${dayExercise}"`);
             dispatch(setSliceExerciseArray(data));
@@ -59,7 +58,6 @@ const ExerciseScreen: FC<TScreenPropExerciseScreen> = ({ route }) => {
         getData();
 
         return () => {
-            console.log('Размонтирован Упражнения !');
             dispatch(setSliceSaveInDataBase());
         }
 	}, []);
@@ -101,6 +99,7 @@ const ExerciseScreen: FC<TScreenPropExerciseScreen> = ({ route }) => {
     return (
         <GestureDetector gesture={swipe} >
             <View style={styles.main}>
+                {/* <ModalForAmountExercise/> */}
                 <BottomMenu setSelectExercise={setSelectExercise} />
                 <ImageBackground source={exercise.img} style={styles.header}>
                     <DateExercise />
@@ -109,7 +108,7 @@ const ExerciseScreen: FC<TScreenPropExerciseScreen> = ({ route }) => {
                 </ImageBackground>
                 <Sets exercise={exercise} />
                 <View style={{ flex: 1 }}></View>
-                <TimeView givenTime={150} />
+                <TimeView givenTime={5} />
             </View>
         </GestureDetector>
     );

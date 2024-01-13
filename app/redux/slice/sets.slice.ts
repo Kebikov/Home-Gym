@@ -163,6 +163,12 @@ const setsSlice = createSlice({
             state.currentDaysId = undefined;
             state.exerciseArray = initialState.exerciseArray;
             state.pushSetId = initialState.pushSetId;
+        },
+        /**
+         * Флаг изминения данных в БД.
+         */
+        setSliceIsUpdateToggle: (state) => {
+            state.isUpdateToggle = !state.isUpdateToggle; 
         }
     },
     extraReducers: (builder) => {
@@ -191,5 +197,6 @@ export const {
     setSliceChangeExerciseInArray,
     setSliceCurrentDaysId,
     setSliceIsStartTimer,
-    resetSetsSlice
+    resetSetsSlice,
+    setSliceIsUpdateToggle
 } = setsSlice.actions;

@@ -3,7 +3,6 @@ import React, { FC, useState } from 'react';
 import { COLOR_ROOT_APP } from '@/data/colors';
 import { IExercise } from '@/data/dataStartExercise';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
-
 //* helpers
 import calculationTotalWeight from '@/helpers/calculationTotalWeight';
 import { TypeRootPage } from '@/navigation/navigation.types';
@@ -78,7 +77,13 @@ const WeightExercise: FC<IWeightExercise> = ({exercise}) => {
                     <Text style={styles.textKg} >{exercise.weightOne}</Text>
                 </Pressable>
 
-                <Pressable style={[styles.center, styles.publicBox]} onPress={() => setModalVisible(!modalVisible)} >
+                <Pressable 
+                    style={[styles.center, styles.publicBox]} 
+                    onPress={() => {
+                            setModalVisible(!modalVisible);
+                        }
+                    }
+                >
                     <Text style={styles.textWeight} >{weightTotal}</Text>
                     <Text style={styles.textKg} >{`KG / ${exercise.amountExercise}`}</Text>
                 </Pressable>

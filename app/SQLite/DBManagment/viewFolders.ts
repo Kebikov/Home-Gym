@@ -10,9 +10,9 @@ const viewFolders = async (folder: string = '') => {
     try {
         const dbDir = FileSystem.documentDirectory + folder + '/';
         const result = await FileSystem.readDirectoryAsync(dbDir);
-        console.log(result);
+        console.info(`Данные внутри директории ${folder}: `, result);
     }catch (error) {
-        console.log('Error in Function viewFolders >>> ', error);
+        console.error('Error in Function viewFolders >>> ', error);
     }
 }
 

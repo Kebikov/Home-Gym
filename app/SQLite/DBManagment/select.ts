@@ -26,8 +26,6 @@ const select = async (table: string) => {
                         `SELECT * FROM ${table}`,
                         [],
                         (_, { rows }) => {
-                            const data = rows;
-                            console.log('Data >>>', data._array);
                             resolve(rows._array);
                         },
                         (_, { message }) => {

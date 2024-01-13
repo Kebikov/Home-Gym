@@ -108,7 +108,7 @@ const ExerciseScreen: FC<TScreenPropExerciseScreen> = ({ route }) => {
                 </ImageBackground>
                 <Sets exercise={exercise} />
                 <View style={{ flex: 1 }}></View>
-                <TimeView givenTime={5} />
+                <TimeView givenTime={150} />
             </View>
         </GestureDetector>
     );

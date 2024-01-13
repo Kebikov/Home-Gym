@@ -16,6 +16,7 @@ export type TypeRootPage = {
          */
         exercise: IExercise;
     };
+    SettingsScreen: undefined;
 };
 
 export type TScreenPropExerciseScreen = {

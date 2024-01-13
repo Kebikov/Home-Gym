@@ -1,8 +1,9 @@
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Image, Pressable } from 'react-native';
 import React, { FC, useEffect, useState } from 'react';
 import Gradient from '@/component/Gradient/Gradient';
 import { IDataDays } from '@/data/dataDays';
-import { useFocusEffect } from '@react-navigation/native';
+import { icon } from '@/source/icon/icon';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 //* SQL
 import DBManagment from '@/SQLite/DBManagment';
 import Configuration from '@/SQLite/DBManagment/сonfiguration';
@@ -10,6 +11,7 @@ import Configuration from '@/SQLite/DBManagment/сonfiguration';
 import Day from '@/component/Day/Day';
 //* redux
 import { useAppSelector } from '@/redux/store/hooks';
+import { TypeRootPage } from '@/navigation/navigation.types';
 
 
 //: DaysScreen
@@ -20,6 +22,8 @@ import { useAppSelector } from '@/redux/store/hooks';
  * @returns {JSX.Element}
  */
 const DaysScreen: FC = () => {
+
+    const {navigate} = useNavigation<NavigationProp<TypeRootPage>>();
 
     /**
      * @param stateDays Массив с данными дней.
@@ -44,6 +48,12 @@ useEffect(() => {
 
 	return (
 		<View style={style.main} >
+            <Pressable
+                style={style.settingsBox}
+                onPress={() => navigate('SettingsScreen')}
+            >
+                <Image source={icon.settings_icon} style={style.settingsImg} />
+            </Pressable>
             <Gradient text='Days Of Training' size={32} />
             {
                 days
@@ -71,6 +81,20 @@ const style = StyleSheet.create({
         fontWeight: '500',
         textTransform: 'uppercase',
         fontFamily: 'Sport'
+    },
+    settingsBox: {
+        position: 'absolute',
+        zIndex: 1,
+        top: 20,
+        right: 20,
+        width: 45,
+        height: 45,
+        padding: 5
+    },
+    settingsImg: {
+        resizeMode: 'contain',
+        width: '100%',
+        height: '100%'
     }
 });
 

@@ -11,6 +11,7 @@ export const icon = {
 	question: require('@/source/icon/files/question.png'),
     question_active: require('@/source/icon/files/question_active.png'),
     arrow_back: require('@/source/icon/files/arrow_back.png'),
+    settings_icon: require('@/source/icon/files/settings_icon.png')
 };
 
 

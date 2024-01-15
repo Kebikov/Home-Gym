@@ -1,13 +1,15 @@
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 import React, { FC, useState, useEffect } from 'react';
 import { COLOR_ROOT_APP } from '@/data/colors';
-import COMMAND_SQL from '@/SQLite/CommandSQL/commandSQL';
 import { Audio } from 'expo-av';
 //* redux
 import { useAppSelector, useAppDispatch } from '@/redux/store/hooks';
 import { setSlicePushSetId, setSliceIsStartTimer } from '@/redux/slice/sets.slice';
 import { useDispatch } from 'react-redux';
 import { IExercise } from '@/data/dataStartExercise';
+import ModalForAmount from '../ModalForAmount/ModalForAmount';
+
+export type TId = '0' | '1' | '2' | 'burpee';
 
 interface ISet {
     /**
@@ -23,9 +25,8 @@ interface ISet {
      * - Формируется как обшее название упражнения + номер по очередности.
      * - Пример: 'EXERCISE_1' + 1.
      */
-    id: string;
+    id: TId;
 }
-
 
 /**
  * @component
@@ -38,13 +39,18 @@ interface ISet {
  */
 //= Set 
 const Set: FC<ISet> = ({amount, exercise, id}) => {
-
     /**
      * Формирование уникального id для подхода в упражнении.
      * @example "DAY_1#EXERCISE_1#0"
      */
     const createdId:string = exercise.day + '#' + exercise.exercise + '#' + id;
-
+    /**
+     * Состояние видимости модального окна с изминение количества упражнений.
+     */
+    const [modalVisible, setModalVisible] = useState<boolean>(false);
+    /**
+     * Обьект музыкального файла.
+     */
     const [loadedSound, setLoadedSound] = useState<Audio.Sound>();
     const dispatch = useDispatch();
     /**
@@ -55,7 +61,6 @@ const Set: FC<ISet> = ({amount, exercise, id}) => {
         setLoadedSound(loadedSound);
         await sound.playAsync();
     };
-    
     /**
      * Массив с нажатыми id.
      */
@@ -80,21 +85,29 @@ const Set: FC<ISet> = ({amount, exercise, id}) => {
 
     
 	return (
-		<Pressable
-            style={[styles.container, isPush ? {borderColor: COLOR_ROOT_APP.LIME_70, borderWidth: 3} : null]} 
-            onPress={() => {
-                onPush();
-                playSound();
-            }} 
-        >
-            <View style={styles.rapBox} >
-                <Text style={styles.textRap} >{amount}</Text>
-            </View>
-            <View style={styles.descriptionsBox} >
-                <Text style={styles.textTitle} >{id === 'burpee' ? 'Burpee' : exercise.title}</Text>
-                <Text style={styles.textDescriptions} >{id === 'burpee' ? 'с отжиманием и прыжком' : exercise.description}</Text>
-            </View>
-		</Pressable>
+        <>
+            <ModalForAmount modalVisible={modalVisible} setModalVisible={setModalVisible} exercise={exercise} id={id} />
+            <Pressable
+                style={[styles.container, isPush ? {borderColor: COLOR_ROOT_APP.LIME_70, borderWidth: 3} : null]} 
+                onPress={() => {
+                    onPush();
+                    playSound();
+                }} 
+                onLongPress={() => {
+                    if(id === 'burpee' || id === '2') {
+                        setModalVisible(true);
+                    }
+                }}
+            >
+                <View style={styles.rapBox} >
+                    <Text style={styles.textRap} >{amount}</Text>
+                </View>
+                <View style={styles.descriptionsBox} >
+                    <Text style={styles.textTitle} >{id === 'burpee' ? 'Burpee' : exercise.title}</Text>
+                    <Text style={styles.textDescriptions} >{id === 'burpee' ? 'с отжиманием и прыжком' : exercise.description}</Text>
+                </View>
+            </Pressable>
+        </>
 	);
 };
 

@@ -5,7 +5,7 @@ import { useAppDispatch } from '@/redux/store/hooks';
 import { setSliceChangeExerciseInArray } from '@/redux/slice/sets.slice';
 import { IExercise } from '@/data/dataStartExercise';
 
-interface IModalForAmountExercise {
+export interface IModalForAmountExercise {
 	/**
 	 * Состояни открыто ли модальное окно.
 	 */

@@ -1,4 +1,4 @@
-import { View, StyleSheet, ImageBackground, ActivityIndicator } from 'react-native';
+import { View, StyleSheet, ImageBackground, ActivityIndicator, Text } from 'react-native';
 import React, { FC, useEffect, useState } from 'react';
 import { TScreenPropExerciseScreen } from '@/navigation/navigation.types';
 import { IExercise, TExercise } from '@/data/dataStartExercise';
@@ -14,7 +14,6 @@ import UpDownWeight from '@/component/UpDownWeight/UpDownWeight';
 import TimeView from '@/component/TimeView/TimeView';
 import Sets from '@/component/Sets/Sets';
 import BottomMenu from '@/component/BottomMenu/BottomMenu';
-import ModalForAmountExercise from '@/component/ModalForAmountExercise/ModalForAmountExercise';
 //* SQL
 import DBManagment from '@/SQLite/DBManagment';
 import Configuration from '@/SQLite/DBManagment/сonfiguration';
@@ -101,8 +100,11 @@ const ExerciseScreen: FC<TScreenPropExerciseScreen> = ({ route }) => {
             <View style={styles.main}>
                 {/* <ModalForAmountExercise/> */}
                 <BottomMenu setSelectExercise={setSelectExercise} />
-                <ImageBackground source={exercise.img} style={styles.header}>
-                    <DateExercise />
+                <ImageBackground source={exercise.img} style={styles.header} >
+                    <DateExercise/>
+                    <View style={styles.numberBox} >
+                        <Text style={styles.numberText} >{selectExercise + 1}</Text>
+                    </View>
                     <WeightExercise exercise={exercise} />
                     <UpDownWeight exercise={exercise} />
                 </ImageBackground>
@@ -135,7 +137,18 @@ const styles = StyleSheet.create({
 	text: {
 		color: '#fff',
 		fontSize: 30
-	}
+	},
+    numberBox: {
+        position: 'absolute',
+        left: 30,
+        top: 30
+    },
+    numberText: {
+        color: 'white',
+        fontSize: 200,
+        fontFamily: 'Sport',
+        opacity: .6
+    }
 });
 
 export default ExerciseScreen;

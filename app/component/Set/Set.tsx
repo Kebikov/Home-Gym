@@ -48,18 +48,24 @@ const Set: FC<ISet> = ({amount, exercise, id}) => {
      * Состояние видимости модального окна с изминение количества упражнений.
      */
     const [modalVisible, setModalVisible] = useState<boolean>(false);
-    /**
-     * Обьект музыкального файла.
-     */
-    const [loadedSound, setLoadedSound] = useState<Audio.Sound>();
     const dispatch = useDispatch();
     /**
      * Функция для проигрывания звука.
      */
     const playSound = async () => {
         const {sound} = await Audio.Sound.createAsync(require('@/source/audio/bip.mp3'));
-        setLoadedSound(loadedSound);
-        await sound.playAsync();
+        sound.playAsync()
+                .then((result) => {
+                    // Удаление сушности sound после проигрывания звука.
+                    // 'durationMillis' - продолжительность про
+                    if('durationMillis' in result) {
+                        setTimeout(() => {
+                            sound.unloadAsync();
+                        }, result.durationMillis);
+                    }
+                    
+                })
+                .catch(error => console.error('Ошибка очистки звука:', error))
     };
     /**
      * Массив с нажатыми id.
@@ -76,12 +82,6 @@ const Set: FC<ISet> = ({amount, exercise, id}) => {
         dispatch(setSlicePushSetId(createdId));
         dispatch(setSliceIsStartTimer(true));
     }
-
-    useEffect(() => {
-        return () => {
-            if(loadedSound) loadedSound.unloadAsync();
-        }
-    },[]);
 
     
 	return (

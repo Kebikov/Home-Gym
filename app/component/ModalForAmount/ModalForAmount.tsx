@@ -29,6 +29,35 @@ const ModalForAmount: FC<IModalForAmount> = ({ modalVisible, setModalVisible, ex
         setStateAmount(str);
     }
 
+    const saveData = () => {
+        let amount = Number(stateAmount);
+
+        if(typeof amount === 'number') {
+            if(id === 'burpee') {
+                dispatch(
+                    setSliceChangeExerciseInArray({
+                        day: exercise.day,
+                        exercise: exercise.exercise,
+                        burpee: amount
+                    })
+                );
+                ToastAndroid.show('Данные сохранены.', ToastAndroid.SHORT);
+            }
+            if(id === '2') {
+                dispatch(
+                    setSliceChangeExerciseInArray({
+                        day: exercise.day,
+                        exercise: exercise.exercise,
+                        amount
+                    })
+                );
+                ToastAndroid.show('Данные сохранены.', ToastAndroid.SHORT);
+            }
+        } else {
+            ToastAndroid.show('Значение должно быть числом.', ToastAndroid.SHORT);
+        }
+    }
+
 	return (
 		<View style={styles.container}>
 			<Modal animationType='fade' transparent={true} visible={modalVisible}>
@@ -47,20 +76,7 @@ const ModalForAmount: FC<IModalForAmount> = ({ modalVisible, setModalVisible, ex
 									title='save'
 									color={COLOR_ROOT_APP.LIME_70}
 									onPress={() => {
-                                        let amount = Number(stateAmount);
-
-                                        if(typeof amount === 'number') {
-                                            dispatch(
-                                                setSliceChangeExerciseInArray({
-                                                    day: exercise.day,
-                                                    exercise: exercise.exercise,
-                                                    amount
-                                                })
-                                            );
-                                            ToastAndroid.show('Данные сохранены.', ToastAndroid.SHORT);
-                                        } else {
-                                            ToastAndroid.show('Значение должно быть числом.', ToastAndroid.SHORT);
-                                        }
+                                        saveData();
                                         setModalVisible(!modalVisible);
 									}}
 								/>

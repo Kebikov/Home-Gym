@@ -78,7 +78,7 @@ export const DATA_START_EXERCISE: Array<IExercise> = [
         weightOne: '4+3',
         weightTwo: '4+3+0',
         amount: 12,
-        amountExercise: 5,
+        amountExercise: 6,
         isUp: 'not',
         img: require('@/source/img/days/day-1/1.jpg'),
         burpee: 18
@@ -89,11 +89,11 @@ export const DATA_START_EXERCISE: Array<IExercise> = [
         title: 'Присидания со штангой.',
         description: 'крепление в 9 отверстие',
         weightNeck: '7.3',
-        weightOne: '20+2',
+        weightOne: '20+4',
         weightTwo: '-',
         amount: 20,
-        amountExercise: 8,
-        isUp: 'up',
+        amountExercise: 1,
+        isUp: 'not',
         img: require('@/source/img/days/day-1/2.jpg'),
         burpee: 16
     },
@@ -106,7 +106,7 @@ export const DATA_START_EXERCISE: Array<IExercise> = [
         weightOne: '20+10+5+4',
         weightTwo: '-',
         amount: 12,
-        amountExercise: 1,
+        amountExercise: 2,
         isUp: 'not',
         img: require('@/source/img/days/day-1/3.jpg'),
         burpee: 0
@@ -207,7 +207,7 @@ export const DATA_START_EXERCISE: Array<IExercise> = [
         weightOne: '4+1',
         weightTwo: '4+0',
         amount: 12,
-        amountExercise: 6,
+        amountExercise: 7,
         isUp: 'not',
         img: require('@/source/img/days/day-4/1.jpg'),
         burpee: 18
@@ -221,7 +221,7 @@ export const DATA_START_EXERCISE: Array<IExercise> = [
         weightOne: '4+3+2+0',
         weightTwo: '-',
         amount: 20,
-        amountExercise: 6,
+        amountExercise: 7,
         isUp: 'not',
         img: require('@/source/img/days/day-4/2.jpg'),
         burpee: 16
@@ -232,11 +232,11 @@ export const DATA_START_EXERCISE: Array<IExercise> = [
         title: 'Битепс, упражнение молоток.',
         description: 'с двумя гантелями',
         weightNeck: '1.6',
-        weightOne: '2+1',
+        weightOne: '2+1+0',
         weightTwo: '-',
         amount: 20,
-        amountExercise: 23,
-        isUp: 'up',
+        amountExercise: 1,
+        isUp: 'not',
         img: require('@/source/img/days/day-3/3.jpg'),
         burpee: 0
     },
@@ -284,10 +284,3 @@ export const DATA_START_EXERCISE: Array<IExercise> = [
         burpee: 0
     }
 ];
-
-
-
-    // /**
-    //  * Количество сделаных подходов упражнения в данный день, число указываюшее сколько раз уже сделал например жим лежа в данный день.
-    //  */
-    // approach: number;

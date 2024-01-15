@@ -71,13 +71,25 @@ const TimeView: FC<ITimerView> = ({ givenTime }) => {
 	 */
 	const step: number = 100 / givenTime;
 
-
     const playSound = async (music: AVPlaybackSource) => {
         try{
             const { sound } = await Audio.Sound.createAsync(music);
             setSoundPlay(sound);
-            await sound.playAsync();
             Vibration.vibrate([7, 8, 10]);
+            sound.playAsync()
+                .then((result) => {
+                    // Удаление сушности sound после проигрывания звука.
+                    // 'durationMillis' - продолжительность про
+                    if('durationMillis' in result) {
+                        setTimeout(() => {
+                            sound.unloadAsync();
+                        }, result.durationMillis);
+                    }
+                    
+                })
+                .catch(error => console.error('Ошибка очистки звука:', error))
+            
+            
         } catch(error) {
             console.error('Error in funtion "playSound">>>', error);
         }
@@ -86,7 +98,8 @@ const TimeView: FC<ITimerView> = ({ givenTime }) => {
     const stopSound = async () => {
         try {
             if(soundPlay) {
-                await soundPlay.stopAsync();
+                console.log(soundPlay);
+                await soundPlay.unloadAsync();
             }
         } catch(error) {
             console.error('Error in funtion "stopSound" >>> ', error);
@@ -118,12 +131,10 @@ const TimeView: FC<ITimerView> = ({ givenTime }) => {
         } else {
             clearTimeout(timer);
             setBalanceTime(givenTime);
-            if(soundPlay) soundPlay.unloadAsync();
         }
 
         return () => {
             clearTimeout(timer);
-            if(soundPlay) soundPlay.unloadAsync();
         };
     }, [isStartTimer]);
 
@@ -160,7 +171,6 @@ const TimeView: FC<ITimerView> = ({ givenTime }) => {
 						strokeWidth={strokeWidth}
 						strokeDasharray={circumference}
 						strokeDashoffset={circumference - (circumference * positionProgressInCircle * step) / 100}
-						//strokeLinecap='round'
 					/>
 				</G>
 				<Text style={[styles.text, styles.absoluteCenter]}>{transferSecInTime(balanceTime)}</Text>

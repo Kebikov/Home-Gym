@@ -79,7 +79,7 @@ export const DATA_START_EXERCISE: Array<IExercise> = [
         weightTwo: '4+3+0',
         amount: 12,
         amountExercise: 6,
-        isUp: 'not',
+        isUp: '?',
         img: require('@/source/img/days/day-1/1.jpg'),
         burpee: 18
     },
@@ -121,8 +121,8 @@ export const DATA_START_EXERCISE: Array<IExercise> = [
         weightOne: '',
         weightTwo: '',
         amount: 19,
-        amountExercise: 1,
-        isUp: 'not',
+        amountExercise: 2,
+        isUp: '?',
         img: require('@/source/img/days/day-2/1.jpg'),
         burpee: 18
     },
@@ -135,7 +135,7 @@ export const DATA_START_EXERCISE: Array<IExercise> = [
         weightOne: '10+5+1+0',
         weightTwo: '-',
         amount: 12,
-        amountExercise: 3,
+        amountExercise: 4,
         isUp: 'not',
         img: require('@/source/img/days/day-2/2.jpg'),
         burpee: 16
@@ -149,7 +149,7 @@ export const DATA_START_EXERCISE: Array<IExercise> = [
         weightOne: '2',
         weightTwo: '1+0',
         amount: 20,
-        amountExercise: 6,
+        amountExercise: 7,
         isUp: 'not',
         img: require('@/source/img/days/day-2/3.jpg'),
         burpee: 0
@@ -164,7 +164,7 @@ export const DATA_START_EXERCISE: Array<IExercise> = [
         weightOne: '10+1+1',
         weightTwo: '-',
         amount: 20,
-        amountExercise: 2,
+        amountExercise: 3,
         isUp: 'not',
         img: require('@/source/img/days/day-3/1.jpg'),
         burpee: 18
@@ -178,7 +178,7 @@ export const DATA_START_EXERCISE: Array<IExercise> = [
         weightOne: '20+10+2',
         weightTwo: '-',
         amount: 12,
-        amountExercise: 1,
+        amountExercise: 2,
         isUp: 'not',
         img: require('@/source/img/days/day-3/2.jpg'),
         burpee: 16
@@ -192,7 +192,7 @@ export const DATA_START_EXERCISE: Array<IExercise> = [
         weightOne: '4+1',
         weightTwo: '4',
         amount: 12,
-        amountExercise: 5,
+        amountExercise: 6,
         isUp: 'not',
         img: require('@/source/img/days/day-3/3.jpg'),
         burpee: 0
@@ -207,7 +207,7 @@ export const DATA_START_EXERCISE: Array<IExercise> = [
         weightOne: '4+1',
         weightTwo: '4+0',
         amount: 12,
-        amountExercise: 7,
+        amountExercise: 8,
         isUp: 'not',
         img: require('@/source/img/days/day-4/1.jpg'),
         burpee: 18
@@ -221,7 +221,7 @@ export const DATA_START_EXERCISE: Array<IExercise> = [
         weightOne: '4+3+2+0',
         weightTwo: '-',
         amount: 20,
-        amountExercise: 7,
+        amountExercise: 8,
         isUp: 'not',
         img: require('@/source/img/days/day-4/2.jpg'),
         burpee: 16
@@ -235,9 +235,9 @@ export const DATA_START_EXERCISE: Array<IExercise> = [
         weightOne: '2+1+0',
         weightTwo: '-',
         amount: 20,
-        amountExercise: 1,
+        amountExercise: 2,
         isUp: 'not',
-        img: require('@/source/img/days/day-3/3.jpg'),
+        img: require('@/source/img/days/day-4/3.jpg'),
         burpee: 0
     },
     //* DAY_5
@@ -248,10 +248,10 @@ export const DATA_START_EXERCISE: Array<IExercise> = [
         description: 'нетральное положение скамьи',
         weightNeck: '1.6',
         weightOne: '4+3+2+1',
-        weightTwo: '4+3+2+0',
+        weightTwo: '-',
         amount: 12,
-        amountExercise: 0,
-        isUp: 'up',
+        amountExercise: 1,
+        isUp: 'not',
         img: require('@/source/img/days/day-5/1.jpg'),
         burpee: 18
     },
@@ -264,7 +264,7 @@ export const DATA_START_EXERCISE: Array<IExercise> = [
         weightOne: '20+4',
         weightTwo: '-',
         amount: 12,
-        amountExercise: 1,
+        amountExercise: 2,
         isUp: 'not',
         img: require('@/source/img/days/day-5/2.jpg'),
         burpee: 16
@@ -278,7 +278,7 @@ export const DATA_START_EXERCISE: Array<IExercise> = [
         weightOne: '20+5',
         weightTwo: '-',
         amount: 20,
-        amountExercise: 1,
+        amountExercise: 2,
         isUp: 'not',
         img: require('@/source/img/days/day-5/3.jpg'),
         burpee: 0

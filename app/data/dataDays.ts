@@ -45,15 +45,15 @@ export const DATA_DAYS: Array<IDataDays> = [
     {
         day: 'DAY_1',
         img: require(`@/source/img/daysScreen/daysScreen_1.jpg`),
-        date: '15.01.2024',
+        date: '16.01.2024',
         title: 'Day One',
         description: 'Битепс / Ноги / Грудь',
-        lastExercise: 1
+        lastExercise: 0
     },
     {
         day: 'DAY_2',
         img: require(`@/source/img/daysScreen/daysScreen_2.jpg`),
-        date: '27.12.2023',
+        date: '17.01.2024',
         title: 'Day Two',
         description: 'Грудь / Битепс / Плечи',
         lastExercise: 0
@@ -61,7 +61,7 @@ export const DATA_DAYS: Array<IDataDays> = [
     {
         day: 'DAY_3',
         img: require(`@/source/img/daysScreen/daysScreen_3.jpg`),
-        date: '30.12.2023',
+        date: '19.01.2024',
         title: 'Day Three',
         description: 'Битепс / Грудь / Ноги',
         lastExercise: 0
@@ -69,7 +69,7 @@ export const DATA_DAYS: Array<IDataDays> = [
     {
         day: 'DAY_4',
         img: require(`@/source/img/daysScreen/daysScreen_4.jpg`),
-        date: '04.01.2024',
+        date: '21.01.2024',
         title: 'Day Four',
         description: 'Плечи / Грудь / Битепс',
         lastExercise: 0
@@ -77,9 +77,9 @@ export const DATA_DAYS: Array<IDataDays> = [
     {
         day: 'DAY_5',
         img: require(`@/source/img/daysScreen/daysScreen_5.jpg`),
-        date: '08.01.2024',
+        date: '23.01.2024',
         title: 'Day Five',
         description: 'Грудь / Плечи / Спина',
-        lastExercise: 0
+        lastExercise: 1
     }
 ];
